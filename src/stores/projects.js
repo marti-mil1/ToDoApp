@@ -9,9 +9,9 @@ export const useProjectsStore = defineStore('projects', () => {
   // GETTERS/COMPUTED
 
   // ACTIONS
-  const addProjects = async (userName, mail) => {
+  async function addProjects(title, description) {
     try {
-        const data = await createProject(userName, mail);
+        const data = await createProject(title, description);
         projects.push(data)
 
 
@@ -20,10 +20,10 @@ export const useProjectsStore = defineStore('projects', () => {
     }
   }
 
-  const fetchProjects = async () => {
+  async function fetchProjects() {
     try {
         const data = await getAllProjects();
-        projects.push( ...data)
+        projects.push( ... data) 
 
     } catch(err) {
         console.error(err)
