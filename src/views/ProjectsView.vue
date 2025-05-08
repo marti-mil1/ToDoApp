@@ -1,6 +1,8 @@
 <script setup>
 // import { useProjectsStore } from '@/stores/projects';
 // import { storeToRefs } from 'pinia';
+// import { onMounted,ref } from 'vue';
+
 
 // const title = ref('')
 // const description = ref('')
@@ -28,11 +30,12 @@
     </label>
 
     <button type="submit">Add Project</button>
+
    </form>
 
    <ul>
     <li v-for="project in projects" :key="project.id">
-        <h2>{{ project.name }}</h2>
+        <h2>{{ project.title }}</h2>
     </li>
    </ul>
   </main>
