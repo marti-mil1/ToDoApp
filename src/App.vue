@@ -5,9 +5,13 @@ import { RouterLink, RouterView } from 'vue-router'
 
 <template>
 
-    <!-- <RouterLink to="/projects">Projects</RouterLink>  -->
+  <div id="app">
+    
+    <RouterView />
+     <!-- <RouterLink to="/projects">Projects</RouterLink>  -->
+  </div>
 
-  <RouterView />
+ 
 </template>
 
 <style scoped>

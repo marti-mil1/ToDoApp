@@ -1,7 +1,7 @@
 // pido datos, los proceso y los devuelvo
 // aqui indicamos los servicios modularizados/ las funciones sobre mis proyectos
 
-import { supabase } from '@/api/supabase/index';
+import { supabase } from '@/api/supabase';
 
 const TABLE_NAME = 'projects'
 
