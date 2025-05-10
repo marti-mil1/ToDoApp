@@ -1,44 +1,58 @@
 <script setup>
-// import { useProjectsStore } from '@/stores/projects';
-// import { storeToRefs } from 'pinia';
-// import { onMounted,ref } from 'vue';
+import { useProjectsStore } from '@/stores/projects';
+import { storeToRefs } from 'pinia';
+import { onMounted, ref } from 'vue';
 
 
-// const title = ref('')
-// const description = ref('')
+const title = ref('')
+const description = ref('')
 
-// const projectStore = useProjectsStore()
-// const { projects } = storeToRefs(pro)
+const projectsStore = useProjectsStore()
+const { projects } = storeToRefs(projectsStore)
 
-// const _handleSubmit = () => {
+const _handleSubmit = async () => {
+    try {
+        await projectsStore.addProjects(title.value, description.value)
 
-// }
+        //limpiamos el formulario
+        title.value = ''
+        description.value = ''
+    } catch (err) {
+        console.err(err)
+    }
+}
+
+onMounted(() => {
+    projectsStore.fetchProjects()
+})
+
+
 </script>
 
 <template>
-  <main>
-   <h1>Projects View</h1>
+    <main>
+        <h1>Projects View</h1>
 
-   <form @submit.prevent="_handleSubmit">
-    <label>
-        Title
-        <input type="text" v-model="title">
-    </label>
-    <label>
-        Description
-        <input type="text" v-model="description">
-    </label>
+        <form @submit.prevent="_handleSubmit">
+            <label>
+                Title
+                <input type="text" v-model="title">
+            </label>
+            <label>
+                Description
+                <input type="text" v-model="description">
+            </label>
 
-    <button type="submit">Add Project</button>
+            <button type="submit">Add Project</button>
 
-   </form>
+        </form>
 
-   <ul>
-    <li v-for="project in projects" :key="project.id">
-        <h2>{{ project.title }}</h2>
-    </li>
-   </ul>
-  </main>
+        <ul>
+            <li v-for="project in projects" :key="project.id">
+                <h2>{{ project.title }}</h2>
+            </li>
+        </ul>
+    </main>
 </template>
 
 
@@ -50,11 +64,13 @@ main {
     justify-content: center;
     align-items: flex-start;
 
-    form {
+   
+}
+
+ form {
         display: flex;
         justify-content: center;
         align-items: center;
         gap: 20px
     }
-}
 </style>
