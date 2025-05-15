@@ -1,71 +1,80 @@
-import { ref } from "vue";
+// src/stores/user.js
 import { defineStore } from "pinia";
-import { signInWithPw, signUp, signOut } from "@/api/supabase/userApi";
+import { ref } from "vue";
+import {
+  createAccount,
+  loginUser,
+  seeCurrentUser,
+  logoutUser,
+} from "../api/supabase/userApi";
 
 export const useUserStore = defineStore("user", () => {
-  // STATE
+  const email = ref("");
+  const password = ref("");
   const user = ref(null);
-  const isAuthenticated = ref(false);
 
-  // GETTERS/COMPUTED
-
-  // ACTIONS
-  async function login(email, pw) {
+  async function register() {
     try {
-      const credentials = await signInWithPw(email, pw);
-      if (credentials?.user) {
-        user.value = credentials.user;
-        isAuthenticated.value = true;
-        return true;
-      } else {
-        isAuthenticated.value = false;
-        return false;
-      }
-    } catch (err) {
-      console.error("Login failed:", err);
-      isAuthenticated.value = false;
-      return false;
+      const data = await createAccount({
+        email: email.value,
+        password: password.value,
+      });
+
+      user.value = data.user;
+      console.log("Account created:", data);
+    } catch (error) {
+      console.error(`Register failed: ${error.message}`);
     }
   }
 
-  async function createNewAccount(email, pw) {
+  async function login() {
     try {
-      const credentials = await signUp(email, pw);
-      if (credentials?.user) {
-        user.value = credentials.user;
-        isAuthenticated.value = true;
-        return true;
+      const data = await loginUser({
+        email: email.value,
+        password: password.value,
+      });
+
+      user.value = data.user;
+      console.log("Login successful:", data);
+    } catch (error) {
+      console.error(`Login failed: ${error.message}`);
+    }
+  }
+
+  async function fetchCurrentUser() {
+    try {
+      const data = await seeCurrentUser();
+
+      if (data.session && data.session.user) {
+        user.value = data.session.user;
+        console.log(`Current user:`, user.value);
       } else {
-        isAuthenticated.value = false;
-        return false;
+        user.value = null;
       }
-    } catch (err) {
-      console.error("Create New Account failed:", err);
-      isAuthenticated.value = false;
-      return false;
+    } catch (error) {
+      console.error(`Fetch user error: ${error.message}`);
     }
   }
 
   async function logout() {
     try {
-      const success = await signOut();
-      if (success) {
-        user.value = null;
-        isAuthenticated.value = false;
-      }
-    } catch (err) {
-      console.error("Logout failed:", err);
+      await logoutUser();
+      console.log("Logged out");
+      email.value = "";
+      password.value = "";
+      user.value = null;
+    } catch (error) {
+      console.error("Logout error:", error.message);
     }
   }
 
   return {
-    //State
+    email,
+    password,
     user,
-    isAuthenticated,
-    //Getters
-    //Actions
+    register,
     login,
-    createNewAccount,
+    fetchCurrentUser,
     logout,
   };
 });

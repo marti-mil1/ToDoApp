@@ -1,7 +1,9 @@
 <script setup>
 import { useProjectsStore } from '@/stores/projects';
+import { useUserStore } from '@/stores/user';
 import { storeToRefs } from 'pinia';
 import { onMounted, ref } from 'vue';
+import { useRouter } from 'vue-router';
 
 
 const title = ref('')
@@ -9,6 +11,11 @@ const description = ref('')
 
 const projectsStore = useProjectsStore()
 const { projects } = storeToRefs(projectsStore)
+
+const userStore = useUserStore()
+const { logout } = userStore
+
+const router = useRouter()
 
 const _handleSubmit = async () => {
     try {
@@ -22,6 +29,11 @@ const _handleSubmit = async () => {
     }
 }
 
+const _handleLogout = async () => {
+    await logout()
+    router.push('/')
+}
+
 onMounted(() => {
     projectsStore.fetchProjects()
 })
@@ -31,6 +43,7 @@ onMounted(() => {
 
 <template>
     <main>
+        <button @click="_handleLogout">Logout</button>
         <h1>Projects View</h1>
 
         <form @submit.prevent="_handleSubmit">
@@ -56,21 +69,35 @@ onMounted(() => {
 </template>
 
 
-
 <style scoped>
-main {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-
-   
+form {
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 5px;
+  background-color: pink;
 }
 
- form {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 20px
-    }
+button,label{
+  width: 100%;
+}
+
+/* CHECK INPUT WIDTH: +8px POR DEFECTO! */
+input {
+    width: 242px;
+}
+
+h2 {
+  text-align: center;
+}
+
+button:hover {
+  background-color: lightyellow;
+  padding: 12px 0;
+  border: none;
+  border-radius: 2px;
+}
 </style>
+

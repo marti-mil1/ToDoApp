@@ -1,72 +1,66 @@
-import { supabase } from '@/api/supabase/index'
-
-//SIGN IN
-export const signInWithPw = async (email, password) => {
-  try {
-    // --- hacemos petición de datos
-    console.log('Attempting to sign in:', email);
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
-
-    //  --- comprobamos error
-    if (error) {
-      throw new Error(`Login failed: ${error.message}`);
-    }
-
-    //  --- procesamos datos? no
-
-    //  --- devolvemos datos
-    console.log('Sign in with password OK:', data);
-    return data;
-  } catch (err) {
-    console.error("Error during login:", err.message);
-    return null;
-  }
-};
+import { supabase } from "@/api/supabase/index.js";
 
 //SIGN UP
-export const signUp = async (email, password) => {
+export async function createAccount({ email, password }) {
   try {
-    // --- hacemos petición de datos
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
     });
 
-    //  --- comprobamos error
     if (error) {
-      throw new Error(`Sign Up failed: ${error.message}`);
+      throw new Error(error.message);
     }
-    //  --- procesamos datos? no
 
-    //  --- devolvemos datos
-    console.log("sign up OK");
     return data;
   } catch (err) {
-    console.error("Error during sign up:", err.message);
-    return null;
+    console.error(`API Error creating account: ${err.message}`);
+    throw err;
   }
-};
+}
+
+//SIGN IN WITH PW
+export async function loginUser({ email, password }) {
+  try {
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    return data;
+  } catch (err) {
+    console.error(`API Login failed: ${error.message}`);
+  }
+}
+
+// SEE USER
+export async function seeCurrentUser() {
+  try {
+    const { data, error } = await supabase.auth.getSession();
+
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    return data;
+  } catch (error) {
+    console.error(`API get session failed: ${error.message}`);
+  }
+}
 
 //SIGN OUT
-export const signOut = async () => {
+export async function logoutUser() {
   try {
-    // --- hacemos petición de datos
     const { error } = await supabase.auth.signOut();
 
-    //  --- comprobamos error
     if (error) {
-      throw new Error(`Sign Out failed: ${error.message}`);
+      throw new Error(error.message);
     }
-    //  --- procesamos datos? no
-
-    //  --- devolvemos datos
-    console.log("sign out OK");
-    return true;
   } catch (err) {
-    console.error("Error during sign out:", err);
-    return false
+    console.error("API Sign outfailed:", err);
   }
-};
+}

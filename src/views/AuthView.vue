@@ -1,94 +1,76 @@
 <script setup>
-import { ref } from 'vue'
-import { useUserStore } from '@/stores/user'
+// import { ref } from 'vue'
+import { useUserStore } from '../stores/user'
 import { storeToRefs } from 'pinia'
+import { useRouter } from 'vue-router'
 
-const email = ref('')
-const pw = ref('')
-
+const router = useRouter()
 const userStore = useUserStore()
-const { user, isAuthenticated } = storeToRefs(userStore)
-const { login, createNewAccount, logout } = userStore
 
-const _handleLogin = async () => {
-  try {
-    const allGood = await login(email.value, pw.value)
-    if (!allGood) {
-      alert('Login failed: Check your email or password')
-    } else {
-      alert('Login successful!')
-    }
-  } catch (err) {
-    console.error("Unexpected error during login:", err)
-  }
+const { email, password, user } = storeToRefs(userStore)
+
+const {
+  register,
+  login,
+  fetchCurrentUser,
+  logout
+} = userStore
+
+const checkProjects = () => {
+  router.push('/projects')
 }
 
-const _handleSignUp = async () => {
-  try {
-    const allGood = await createNewAccount(email.value, pw.value)
-    if (!allGood) {
-      alert('Sign-up failed: Email may already be registered or password too weak')
-    } else {
-      alert('Sign-up successful!')
-    }
-  } catch (err) {
-    console.error("Unexpected error during sign-up:", err)
-  }
-}
 </script>
 
 <template>
-  <main>
-    <form @submit.prevent="_handleLogin">
-      <label>Email</label>
-      <input type="email" placeholder="your.email@email.com" v-model="email" required />
 
-      <label>Password</label>
-      <input type="password" v-model="pw" required />
+  <h1>Home / Auth View</h1>
+  <form @submit.prevent>
+    <label for="email">Your email:</label>
+    <input v-model="email" placeholder="email@example.com" type="text" id="email" autocomplete="email" />
+    <label for="password">Your password:</label>
+    <input v-model="password" placeholder="password" type="password" id="password" autocomplete="current-password"
+      required />
 
-      <button type="submit" class="submit-btn">SIGN IN</button>
-    </form>
+    <br>
 
-    <button @click="_handleSignUp" class="signup-btn">CREATE AN ACCOUNT</button>
-  </main>
+    <button @click="register" v-if="!user">Create Account</button>
+    <button @click="login" v-if="!user">Login</button>
+
+    <h2 v-if="user"> Welcome {{ email }} !</h2>
+
+   
+
+    <button @click="checkProjects" v-if="user">Check your pending projects</button>
+    <button @click="logout" v-if="user">Logout</button>
+  </form>
+
 </template>
 
 <style scoped>
-main {
-  padding: 20px 0 40px;
-  width: 100%;
-  height: 100%;
-  background-color: pink;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
 form {
-  width: 280px;
+  width: 250px;
   display: flex;
   flex-direction: column;
+  gap: px;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 5px
 }
 
-.submit-btn {
-  margin-top: 10px;
-  background-color: lightblue;
-  border: none;
+input,
+button {
+  width: 100%;
 }
 
-.submit-btn:hover {
-  background-color: rgb(126, 195, 218);
+h2 {
+  text-align: center;
 }
 
-.signup-btn {
-  margin-top: 50px;
-  width: 280px;
+button:hover {
   background-color: lightyellow;
+  padding: 12px 0;
   border: none;
-}
-
-.signup-btn:hover {
-  background-color: rgb(250, 250, 116);
+  border-radius: 2px;
 }
 </style>
