@@ -8,73 +8,81 @@ import {
   logoutUser,
 } from "../api/supabase/userApi";
 
-export const useUserStore = defineStore("user", () => {
-  const email = ref("");
-  const password = ref("");
-  const user = ref(null);
+export const useUserStore = defineStore(
+  "user",
+  () => {
+    const email = ref("");
+    const password = ref("");
+    const user = ref(null);
 
-  async function register() {
-    try {
-      const data = await createAccount({
-        email: email.value,
-        password: password.value,
-      });
+    async function register() {
+      try {
+        const data = await createAccount({
+          email: email.value,
+          password: password.value,
+        });
 
-      user.value = data.user;
-      console.log("Account created:", data);
-    } catch (error) {
-      console.error(`Register failed: ${error.message}`);
-    }
-  }
-
-  async function login() {
-    try {
-      const data = await loginUser({
-        email: email.value,
-        password: password.value,
-      });
-
-      user.value = data.user;
-      console.log("Login successful:", data);
-    } catch (error) {
-      console.error(`Login failed: ${error.message}`);
-    }
-  }
-
-  async function fetchCurrentUser() {
-    try {
-      const data = await seeCurrentUser();
-
-      if (data.session && data.session.user) {
-        user.value = data.session.user;
-        console.log(`Current user:`, user.value);
-      } else {
-        user.value = null;
+        user.value = data.user;
+        console.log("Account created:", data);
+      } catch (error) {
+        console.error(`Register failed: ${error.message}`);
       }
-    } catch (error) {
-      console.error(`Fetch user error: ${error.message}`);
     }
-  }
 
-  async function logout() {
-    try {
-      await logoutUser();
-      console.log("Logged out");
-      email.value = "";
-      password.value = "";
-      user.value = null;
-    } catch (error) {
-      console.error("Logout error:", error.message);
+    async function login() {
+      try {
+        const data = await loginUser({
+          email: email.value,
+          password: password.value,
+        });
+
+        user.value = data.user;
+        console.log("Login successful:", data);
+      } catch (error) {
+        console.error(`Login failed: ${error.message}`);
+      }
     }
-  }
 
-  return {
-    email,
-    password,
-    user,
-    register,
-    login,
-    fetchCurrentUser,
-    logout,
-  };
-});
+    async function fetchCurrentUser() {
+      try {
+        const data = await seeCurrentUser();
+
+        if (data.session && data.session.user) {
+          user.value = data.session.user;
+          console.log(`Current user:`, user.value);
+        } else {
+          user.value = null;
+        }
+      } catch (error) {
+        console.error(`Fetch user error: ${error.message}`);
+      }
+    }
+
+    async function logout() {
+      try {
+        await logoutUser();
+        console.log("Logged out");
+        email.value = "";
+        password.value = "";
+        user.value = null;
+      } catch (error) {
+        console.error("Logout error:", error.message);
+      }
+    }
+
+    return {
+      email,
+      password,
+      user,
+      register,
+      login,
+      fetchCurrentUser,
+      logout,
+    };
+  },
+  {
+    persist: {
+      paths: ["user", "email"],
+    },
+  }
+);

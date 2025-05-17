@@ -1,10 +1,10 @@
 <script setup>
+import { seeCurrentUser } from '@/api/supabase/userApi';
 import { useProjectsStore } from '@/stores/projects';
 import { useUserStore } from '@/stores/user';
 import { storeToRefs } from 'pinia';
 import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
-
 
 const title = ref('')
 const description = ref('')
@@ -13,7 +13,12 @@ const projectsStore = useProjectsStore()
 const { projects } = storeToRefs(projectsStore)
 
 const userStore = useUserStore()
-const { logout } = userStore
+const { email } = storeToRefs(userStore)
+const {
+    fetchCurrentUser,
+    logout
+} = userStore
+
 
 const router = useRouter()
 
@@ -44,7 +49,8 @@ onMounted(() => {
 <template>
     <main>
         <button @click="_handleLogout">Logout</button>
-        <h1>Projects View</h1>
+
+        <h1> Projects View</h1>
 
         <form @submit.prevent="_handleSubmit">
             <label>
@@ -63,6 +69,7 @@ onMounted(() => {
         <ul>
             <li v-for="project in projects" :key="project.id">
                 <h2>{{ project.title }}</h2>
+                <h2>{{ project.name }}</h2>
             </li>
         </ul>
     </main>
@@ -71,17 +78,17 @@ onMounted(() => {
 
 <style scoped>
 form {
-  width: 250px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  gap: 5px;
-  background-color: pink;
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 5px;
 }
 
-button,label{
-  width: 100%;
+button,
+label {
+    width: 100%;
 }
 
 /* CHECK INPUT WIDTH: +8px POR DEFECTO! */
@@ -90,14 +97,13 @@ input {
 }
 
 h2 {
-  text-align: center;
+    text-align: center;
 }
 
 button:hover {
-  background-color: lightyellow;
-  padding: 12px 0;
-  border: none;
-  border-radius: 2px;
+    background-color: lightyellow;
+    padding: 12px 0;
+    border: none;
+    border-radius: 2px;
 }
 </style>
-

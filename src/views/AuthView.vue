@@ -5,6 +5,7 @@ import { storeToRefs } from 'pinia'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
+
 const userStore = useUserStore()
 
 const { email, password, user } = storeToRefs(userStore)
@@ -26,23 +27,22 @@ const checkProjects = () => {
 
   <h1>Home / Auth View</h1>
   <form @submit.prevent>
-    <label for="email">Your email:</label>
-    <input v-model="email" placeholder="email@example.com" type="text" id="email" autocomplete="email" />
+    <label for="email">Your email:</label v-show="!user">
+    <input v-model="email" placeholder="email@example.com" type="text" id="email" required />
     <label for="password">Your password:</label>
-    <input v-model="password" placeholder="password" type="password" id="password" autocomplete="current-password"
-      required />
+    <input v-model="password" placeholder="password" type="password" id="password" required />
 
     <br>
 
-    <button @click="register" v-if="!user">Create Account</button>
-    <button @click="login" v-if="!user">Login</button>
+    <button @click="register" v-show="!user">Create Account</button>
+    <button @click="login" v-show="!user">Login</button>
 
-    <h2 v-if="user"> Welcome {{ email }} !</h2>
+    <h2 v-show="user"> Welcome {{ email }} !</h2>
 
    
 
-    <button @click="checkProjects" v-if="user">Check your pending projects</button>
-    <button @click="logout" v-if="user">Logout</button>
+    <button @click="checkProjects" v-show="user">Check your pending projects</button>
+    <button @click="logout" v-show="user">Logout</button>
   </form>
 
 </template>
