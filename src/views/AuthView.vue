@@ -27,7 +27,7 @@ const checkProjects = () => {
 
   <h1>Home / Auth View</h1>
   <form @submit.prevent>
-    <label for="email">Your email:</label v-show="!user">
+    <label for="email">Your email:</label>
     <input v-model="email" placeholder="email@example.com" type="text" id="email" required />
     <label for="password">Your password:</label>
     <input v-model="password" placeholder="password" type="password" id="password" required />

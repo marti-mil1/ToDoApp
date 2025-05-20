@@ -12,9 +12,9 @@ export const useProjectsStore = defineStore('projects', () => {
   async function addProjects(title, description) {
     try {
         const data = await createProject(title, description);
+
+        console.log(data)
         projects.push(data)
-
-
     } catch(err) {
         console.error(err)
     }
@@ -23,11 +23,19 @@ export const useProjectsStore = defineStore('projects', () => {
   async function fetchProjects() {
     try {
         const data = await getAllProjects();
-        projects.push( ... data) 
+
+        const provisionalProjects = []
+
+        data.forEach(project => {
+          if(!project.find(pr => pr.id === project.id)) {
+            provisionalProjects.push(project)
+          }
+        })
+
+        projects.push( ... provisionalProjects)
 
     } catch(err) {
         console.error(err)
-
     }
   }
  

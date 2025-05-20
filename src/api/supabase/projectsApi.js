@@ -8,10 +8,12 @@ const TABLE_NAME = 'projects'
 
 export const getAllProjects = async () => {
     try {
+        const userId = (await supabase.auth.getUser()).data.user.id
         // --- hacemos petición de datos
         const { data, error } = await supabase
             .from(TABLE_NAME)
             .select()
+            .eq('user_id', userId) // filtro  los registros donde el campo 'user_id' sea equivalente al valor userId
 
         //  --- comprobamos error
         // si se ejecuta el throw error, no se va a ejecutar nada de lo que viene después en el codigo
@@ -51,10 +53,15 @@ export const getAllProjects = async () => {
 
 export const createProject = async (title, description) => {
     try {
+        const userId = (await supabase.auth.getUser()).data.user.id
         //hacemos petición de datos
         const { data, error } = await supabase
             .from(TABLE_NAME)
-            .insert({ title, description })
+            .insert({
+                title,
+                description,
+                user_id: userId
+            })
             .select()
 
         //comprobamos error
@@ -66,7 +73,7 @@ export const createProject = async (title, description) => {
         // ...
 
         // devolvemos datos
-        return data
+        return data[0]
 
     //esto se va a ejecutar solo si no se lanza el error aquí arriba 
     } catch(err) {
@@ -74,3 +81,4 @@ export const createProject = async (title, description) => {
         return []; //en este caso en caso de error devolvemos un array vacío
     }
 }
+

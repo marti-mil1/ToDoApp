@@ -22,11 +22,11 @@ const {
 
 const router = useRouter()
 
-const _handleSubmit = async () => {
+const _handleSubmit = async () => {   
     try {
         await projectsStore.addProjects(title.value, description.value)
 
-        //limpiamos el formulario
+        //una vez recibidos los datos limpiamos el formulario
         title.value = ''
         description.value = ''
     } catch (err) {
@@ -66,10 +66,11 @@ onMounted(() => {
 
         </form>
 
+        <h2>Pending Tasks</h2>
+
         <ul>
             <li v-for="project in projects" :key="project.id">
                 <h2>{{ project.title }}</h2>
-                <h2>{{ project.name }}</h2>
             </li>
         </ul>
     </main>
