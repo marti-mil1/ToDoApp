@@ -1,5 +1,4 @@
 <script setup>
-import { seeCurrentUser } from '@/api/supabase/userApi';
 import { useProjectsStore } from '@/stores/projects';
 import { useUserStore } from '@/stores/user';
 import { storeToRefs } from 'pinia';
@@ -8,30 +7,39 @@ import { useRouter } from 'vue-router';
 
 const title = ref('')
 const description = ref('')
-
+//
+const editingId = ref(null);
+//
 const projectsStore = useProjectsStore()
 const { projects } = storeToRefs(projectsStore)
 
 const userStore = useUserStore()
-const { email } = storeToRefs(userStore)
-const {
-    fetchCurrentUser,
-    logout
-} = userStore
+const { logout } = userStore
 
 
 const router = useRouter()
 
-const _handleSubmit = async () => {   
+const _handleSubmit = async () => {
     try {
-        await projectsStore.addProjects(title.value, description.value)
+        if (editingId.value) {
+            await projectsStore.updateProjects(editingId.value, title.value, description.value)
+            editingId.value = null
+        } else {
+            await projectsStore.addProjects(title.value, description.value)
+        }
 
         //una vez recibidos los datos limpiamos el formulario
         title.value = ''
         description.value = ''
     } catch (err) {
-        console.err(err)
+        console.error(err)
     }
+}
+
+const _handleUpdate = (project) => {
+    title.value = project.title,
+        description.value = project.description,
+        editingId.value = project.id
 }
 
 const _handleLogout = async () => {
@@ -62,7 +70,9 @@ onMounted(() => {
                 <input type="text" v-model="description">
             </label>
 
-            <button type="submit">Add Project</button>
+            <button type="submit">
+                {{ editingId ? 'Update Project' : 'Add project' }}
+            </button>
 
         </form>
 
@@ -70,7 +80,10 @@ onMounted(() => {
 
         <ul>
             <li v-for="project in projects" :key="project.id">
-                <h2>{{ project.title }}</h2>
+                <h3>{{ project.title }}</h3>
+                <p>{{ project.description }}</p>
+                <button @click="_handleUpdate(project)">Edit</button>
+                <button @click="_handleRemove(project.id)">Remove</button>
             </li>
         </ul>
     </main>
@@ -106,5 +119,16 @@ button:hover {
     padding: 12px 0;
     border: none;
     border-radius: 2px;
+}
+
+li {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+li.button {
+    background-color: pink;
 }
 </style>

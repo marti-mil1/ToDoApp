@@ -1,50 +1,68 @@
-import { ref, computed, reactive } from 'vue'
-import { defineStore } from 'pinia'
-import { getAllProjects, createProject } from '@/api/supabase/projectsApi'
+import { ref, computed, reactive } from "vue";
+import { defineStore } from "pinia";
+import {
+  getAllProjects,
+  createProject,
+  editProject,
+} from "@/api/supabase/projectsApi";
 
-export const useProjectsStore = defineStore('projects', () => {
+export const useProjectsStore = defineStore("projects", () => {
   // STATE
-  const projects = reactive([])
+  const projects = reactive([]);
 
   // GETTERS/COMPUTED
 
   // ACTIONS
   async function addProjects(title, description) {
     try {
-        const data = await createProject(title, description);
+      const data = await createProject(title, description);
 
-        console.log(data)
-        projects.push(data)
-    } catch(err) {
-        console.error(err)
+      console.log(data);
+      projects.push(data);
+    } catch (err) {
+      console.error(err);
     }
   }
 
   async function fetchProjects() {
     try {
-        const data = await getAllProjects();
+      const data = await getAllProjects();
 
-        const provisionalProjects = []
+      const provisionalProjects = data.filter(
+      (incomingProject) => !projects.find((p) => p.id === incomingProject.id)
+    );
 
-        data.forEach(project => {
-          if(!project.find(pr => pr.id === project.id)) {
-            provisionalProjects.push(project)
-          }
-        })
-
-        projects.push( ... provisionalProjects)
-
-    } catch(err) {
-        console.error(err)
+      projects.push(...provisionalProjects);
+    } catch (err) {
+      console.error(err);
     }
   }
- 
+
+  async function updateProjects (projectId, newTitle, newDescription) {
+    try {
+      const updateProjectData = await editProject(
+        projectId,
+        newTitle,
+        newDescription
+      );
+
+      if (updateProjectData) {
+        const index = projects.findIndex((project) => project.id === projectId);
+        if (index !== -1) {
+          projects[index] = updateProjectData;
+        }
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
   return {
     //State
     projects,
-    //Getters
     //Actions
     addProjects,
-    fetchProjects
-}
-})
+    fetchProjects,
+    updateProjects,
+  };
+});
