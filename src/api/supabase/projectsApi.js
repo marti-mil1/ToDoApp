@@ -110,3 +110,32 @@ export const editProject = async (projectId, newTitle, newDescription) => {
     return null;
   }
 };
+
+export const deleteProject = async (projectId) => {
+  try {
+    const userId = (await supabase.auth.getUser()).data.user.id;
+
+    const { data, error } = await supabase
+      .from(TABLE_NAME)
+      .delete()
+      .eq("user_id", userId)
+      .eq("id", projectId)
+      .select();
+
+    //comprobamos error
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    // procesamos datos si hubiera que procesarlos
+    // ...
+
+    // devolvemos datos
+    return true;
+
+    //esto se va a ejecutar solo si no se lanza el error aquí arriba
+  } catch (err) {
+    console.error(err);
+    return false;
+  }
+};

@@ -37,15 +37,31 @@ const _handleSubmit = async () => {
 }
 
 const _handleUpdate = (project) => {
-    title.value = project.title,
-        description.value = project.description,
-        editingId.value = project.id
+    title.value = project.title
+    description.value = project.description
+    editingId.value = project.id
 }
 
 const _handleLogout = async () => {
     await logout()
     router.push('/')
 }
+
+const _handleRemove = async (projectId) => {
+    try {
+        await projectsStore.removeProjects(projectId)
+
+        if (editingId.value === projectId) {
+            editingId.value = null,
+                title.value = '',
+                description.value = ''
+        }
+
+    } catch (err) {
+        console.error(err)
+    }
+}
+
 
 onMounted(() => {
     projectsStore.fetchProjects()
@@ -63,7 +79,7 @@ onMounted(() => {
         <form @submit.prevent="_handleSubmit">
             <label>
                 Title
-                <input type="text" v-model="title">
+                <input type="text" v-model="title" required>
             </label>
             <label>
                 Description
@@ -79,11 +95,18 @@ onMounted(() => {
         <h2>Pending Tasks</h2>
 
         <ul>
-            <li v-for="project in projects" :key="project.id">
-                <h3>{{ project.title }}</h3>
-                <p>{{ project.description }}</p>
-                <button @click="_handleUpdate(project)">Edit</button>
-                <button @click="_handleRemove(project.id)">Remove</button>
+            <li v-for="project in projects" :key="project.id" class="task-card">
+                <div class="task-details">
+                    <h3>{{ project.title }}</h3>
+                    <p>{{ project.description }}</p>
+
+                </div>
+
+                <div class="task-buttons">
+                    <button @click="_handleUpdate(project)">Edit</button>
+                    <button @click="_handleRemove(project.id)">Remove</button>
+                </div>
+
             </li>
         </ul>
     </main>
@@ -115,20 +138,37 @@ h2 {
 }
 
 button:hover {
-    background-color: lightyellow;
-    padding: 12px 0;
-    border: none;
+    background-color: rgb(0, 136, 255);
+    padding: 2px 0;
     border-radius: 2px;
 }
 
-li {
+ul {
+    margin: 0 auto;
+}
+
+.task-card {
+    width: 100%;
+    padding: 0;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    align-items: flex-start;
+    align-items: center;
+    border: solid grey 1px;
+    border-radius: 5px;
 }
 
-li.button {
-    background-color: pink;
+.task-details {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.task-buttons {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
 }
 </style>
