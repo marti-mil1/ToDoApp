@@ -14,7 +14,7 @@ const projectsStore = useProjectsStore()
 const { projects } = storeToRefs(projectsStore)
 
 const userStore = useUserStore()
-const { logout } = userStore
+const { email, logout } = userStore
 
 
 const router = useRouter()
@@ -74,7 +74,7 @@ onMounted(() => {
     <main>
         <button @click="_handleLogout">Logout</button>
 
-        <h1> Projects View</h1>
+        <h1>Hello {{ email }} !</h1>
 
         <form @submit.prevent="_handleSubmit">
             <label>
@@ -114,14 +114,30 @@ onMounted(() => {
 
 
 <style scoped>
+
+main {
+    background-color: aqua;
+}
+
 form {
-    width: 250px;
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
     gap: 5px;
+    background-color: pink;
 }
+
+h1 {
+    font-size: 23px;
+}
+
+h2 {
+    font-size: 20px;
+}
+
+
 
 button,
 label {
@@ -130,7 +146,7 @@ label {
 
 /* CHECK INPUT WIDTH: +8px POR DEFECTO! */
 input {
-    width: 242px;
+    width: 100%;
 }
 
 h2 {
@@ -143,9 +159,6 @@ button:hover {
     border-radius: 2px;
 }
 
-ul {
-    margin: 0 auto;
-}
 
 .task-card {
     width: 100%;

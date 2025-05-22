@@ -47,17 +47,18 @@ export const useProjectsStore = defineStore("projects", () => {
       const isUpdated = await editProject(projectId, newTitle, newDescription);
 
       if (isUpdated) {
-        const index = projects.value.findIndex(
-          (project) => project.id === projectId
-        );
-        if (index !== -1) {
-          // projects.value.splice(index,1, isUpdated)
-          projects.value[index].title = isUpdated.title
-          projects.value[index].description = isUpdated.description
-        }
-      } 
-      console.log(newTitle) // compruebo si está registrando el nuevo Title
-      console.log(newDescription) // compruebo si está cregistrando la nueva Description
+        // const index = projects.value.findIndex(
+        //   (project) => project.id === projectId
+        // );
+        
+        // if (index !== -1) {
+        //   // projects.value = projects.value.splice(index,1, isUpdated)
+        //   projects.value[index] = projectUpdated
+        // }
+        const project = projects.value.find(pr => pr.id === projectId)
+        project.title = newTitle
+        project.description = newDescription
+      }
     } catch (err) {
       console.error(err);
     }

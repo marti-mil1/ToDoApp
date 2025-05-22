@@ -83,17 +83,13 @@ export const createProject = async (title, description) => {
 
 export const editProject = async (projectId, newTitle, newDescription) => {
   try {
-    const userId = (await supabase.auth.getUser()).data.user.id;
-
-    const { data, error } = await supabase
+    const { error } = await supabase
       .from(TABLE_NAME)
       .update({
         title: newTitle,
         description: newDescription,
       })
-      .eq("user_id", userId) // filtro  los registros donde el campo 'user_id' sea equivalente al valor userId
-      .eq("id", projectId) //  filtro por el ID del proyecto
-      .select();
+      .eq("id", projectId); //  filtro por el ID del proyecto;
 
     //comprobamos error
     if (error) {
@@ -104,21 +100,18 @@ export const editProject = async (projectId, newTitle, newDescription) => {
     // ...
 
     // devolvemos datos
-    return data[0];
+    return true;
   } catch (err) {
     console.error(err);
-    return null;
+    return false;
   }
 };
 
 export const deleteProject = async (projectId) => {
   try {
-    const userId = (await supabase.auth.getUser()).data.user.id;
-
-    const { data, error } = await supabase
+    const { error } = await supabase
       .from(TABLE_NAME)
       .delete()
-      .eq("user_id", userId)
       .eq("id", projectId)
       .select();
 
