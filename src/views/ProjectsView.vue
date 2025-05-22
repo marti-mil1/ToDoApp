@@ -114,74 +114,63 @@ onMounted(() => {
 
 
 <style scoped>
-
 main {
     background-color: aqua;
-}
 
-form {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    gap: 5px;
-    background-color: pink;
-}
+    h1 {
+        font-size: 23px;
+    }
 
-h1 {
-    font-size: 23px;
-}
+    form {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        gap: 5px;
+        background-color: pink;
+    }
 
-h2 {
-    font-size: 20px;
-}
+    h2 {
+        font-size: 20px;
+        text-align: center;
+    }
 
+    button,
+    input,
+    label {
+        width: 100%;
+    }
 
+    button:hover {
+        background-color: rgb(0, 136, 255);
+        padding: 2px 0;
+        border-radius: 2px;
+    }
 
-button,
-label {
-    width: 100%;
-}
+    .task-card {
+        width: 100%;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        border: solid grey 1px;
+        border-radius: 5px;
+    }
 
-/* CHECK INPUT WIDTH: +8px POR DEFECTO! */
-input {
-    width: 100%;
-}
+    .task-details {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
 
-h2 {
-    text-align: center;
-}
-
-button:hover {
-    background-color: rgb(0, 136, 255);
-    padding: 2px 0;
-    border-radius: 2px;
-}
-
-
-.task-card {
-    width: 100%;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    border: solid grey 1px;
-    border-radius: 5px;
-}
-
-.task-details {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.task-buttons {
-    width: 100%;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
+    .task-buttons {
+        width: 100%;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+    }
 }
 </style>
