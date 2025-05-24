@@ -7,6 +7,8 @@ import {
   seeCurrentUser,
   logoutUser,
 } from "../api/supabase/userApi";
+import { toast } from "vue3-toastify";
+import "vue3-toastify/dist/index.css";
 
 export const useUserStore = defineStore(
   "user",
@@ -24,10 +26,15 @@ export const useUserStore = defineStore(
 
         user.value = data.user;
         console.log("Account created:", data);
-        return true
+        return true;
       } catch (error) {
         console.error(`Register failed: ${error.message}`);
-        return false
+        toast(`SignUp failed: ${error.message}`, {
+          theme: "auto",
+          type: "default",
+          dangerouslyHTMLString: true,
+        });
+        return false;
       }
     }
 
@@ -40,10 +47,15 @@ export const useUserStore = defineStore(
 
         user.value = data.user;
         console.log("Login successful:", data);
-        return true
+        return true;
       } catch (error) {
         console.error(`Login failed: ${error.message}`);
-        return false
+        toast(`Login failed: invalid mail or password!`, {
+          theme: "auto",
+          type: "default",
+          dangerouslyHTMLString: true,
+        });
+        return false;
       }
     }
 
@@ -71,6 +83,11 @@ export const useUserStore = defineStore(
         user.value = null;
       } catch (error) {
         console.error("Logout error:", error.message);
+         toast(`Logout failed: ${error.message}`, {
+          theme: "auto",
+          type: "default",
+          dangerouslyHTMLString: true,
+        });
       }
     }
 
