@@ -24,8 +24,10 @@ export const useUserStore = defineStore(
 
         user.value = data.user;
         console.log("Account created:", data);
+        return true
       } catch (error) {
         console.error(`Register failed: ${error.message}`);
+        return false
       }
     }
 
@@ -38,8 +40,10 @@ export const useUserStore = defineStore(
 
         user.value = data.user;
         console.log("Login successful:", data);
+        return true
       } catch (error) {
         console.error(`Login failed: ${error.message}`);
+        return false
       }
     }
 

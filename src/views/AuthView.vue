@@ -8,46 +8,66 @@ const router = useRouter()
 
 const userStore = useUserStore()
 
-const { email, password, user } = storeToRefs(userStore)
+const { email, password } = storeToRefs(userStore)
 
 const {
   register,
-  login,
-  fetchCurrentUser,
-  logout
+  login
 } = userStore
 
-const checkProjects = () => {
-  router.push('/projects')
+
+const _handleLogin = async () => {
+  try {
+    const success = await login()
+
+    if (success) {
+      router.push('/projects')
+    }
+
+    //una vez recibidos los datos limpiamos el formulario
+    email.value = ''
+    password.value = ''
+  } catch (err) {
+    console.error(err)
+  }
 }
 
+const _handleSignUp = async () => {
+  try {
+    const success = await register()
+
+    if (success) {
+      router.push('/projects')
+    }
+
+    //una vez recibidos los datos limpiamos el formulario
+    email.value = ''
+    password.value = ''
+  } catch (err) {
+    console.error(err)
+  }
+}
 </script>
 
 <template>
 
   <h1>Home / Auth View</h1>
   <form @submit.prevent>
-    <label for="email">Your email:</label v-show="!user">
+    <label for="email">Your email:</label>
     <input v-model="email" placeholder="email@example.com" type="text" id="email" required />
     <label for="password">Your password:</label>
     <input v-model="password" placeholder="password" type="password" id="password" required />
 
     <br>
 
-    <button @click="register" v-show="!user">Create Account</button>
-    <button @click="login" v-show="!user">Login</button>
+    <button @click="_handleSignUp">Create Account</button>
+    <button @click="_handleLogin">Login</button>
 
-    <h2 v-show="user"> Welcome {{ email }} !</h2>
-
-   
-
-    <button @click="checkProjects" v-show="user">Check your pending projects</button>
-    <button @click="logout" v-show="user">Logout</button>
   </form>
 
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 form {
   width: 250px;
   display: flex;
@@ -55,22 +75,22 @@ form {
   gap: px;
   justify-content: flex-start;
   align-items: flex-start;
-  gap: 5px
-}
+  gap: 5px;
 
-input,
-button {
-  width: 100%;
-}
+  input,
+  button {
+    width: 100%;
+  }
 
-h2 {
-  text-align: center;
-}
+  h2 {
+    text-align: center;
+  }
 
-button:hover {
-  background-color: lightyellow;
-  padding: 12px 0;
-  border: none;
-  border-radius: 2px;
+  button:hover {
+    background-color: lightyellow;
+    padding: 12px 0;
+    border: none;
+    border-radius: 2px;
+  }
 }
 </style>

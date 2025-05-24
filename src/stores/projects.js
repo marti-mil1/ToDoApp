@@ -1,42 +1,114 @@
-import { ref, computed, reactive } from 'vue'
-import { defineStore } from 'pinia'
-import { getAllProjects, createProject } from '@/api/supabase/projectsApi'
+import { ref } from "vue";
+import { defineStore } from "pinia";
+import {
+  getAllProjects,
+  createProject,
+  editProject,
+  deleteProject,
+  toggleCompletedProject
+} from "@/api/supabase/projectsApi";
 
-export const useProjectsStore = defineStore('projects', () => {
+export const useProjectsStore = defineStore("projects", () => {
   // STATE
-  const projects = reactive([])
+  const projects = ref([]);
 
   // GETTERS/COMPUTED
 
   // ACTIONS
   async function addProjects(title, description) {
     try {
-        const data = await createProject(title, description);
-        projects.push(data)
+      const data = await createProject(title, description);
 
-
-    } catch(err) {
-        console.error(err)
+      if (data) {
+        projects.value.push(data);
+      }
+    } catch (err) {
+      console.error(err);
     }
   }
 
   async function fetchProjects() {
     try {
-        const data = await getAllProjects();
-        projects.push( ... data) 
+      const data = await getAllProjects();
 
-    } catch(err) {
-        console.error(err)
+      // const provisionalProjects = data.filter(
+      //   (incomingProject) =>
+      //     !projects.value.find((p) => p.id === incomingProject.id)
+      // );
 
+      // projects.value.push(...provisionalProjects);
+      projects.value = data
+    } catch (err) {
+      console.error(err);
     }
   }
- 
+
+  async function updateProjects(projectId, newTitle, newDescription) {
+    try {
+      const isUpdated = await editProject(projectId, newTitle, newDescription);
+
+      if (isUpdated) {
+        // const index = projects.value.findIndex(
+        //   (project) => project.id === projectId
+        // );
+        
+        // if (index !== -1) {
+        //   // projects.value = projects.value.splice(index,1, isUpdated)
+        //   projects.value[index] = projectUpdated
+        // }
+        const project = projects.value.find(pr => pr.id === projectId)
+        project.title = newTitle
+        project.description = newDescription
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+    
+  async function toggleCompleted(projectId) {
+    try {
+      const project = projects.value.find(pr => pr.id === projectId) 
+      if (!project) return
+
+      const isToggled = await toggleCompletedProject(projectId, project.completed)
+
+      if (isToggled) {
+        project.completed = !project.completed
+      }
+    }catch (err) {
+      console.error(err);
+    }
+  }
+
+  async function removeProjects(projectId) {
+    try {
+      const isDeleted = await deleteProject(projectId);
+
+      if (isDeleted) {
+        const index = projects.value.findIndex(
+          (project) => project.id === projectId
+        );
+        if (index !== -1) {
+          projects.value.splice(index, 1);
+        }
+      } console.log(`removed ${projectId}`) // compruebo si está cancelando
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+
+
   return {
     //State
     projects,
-    //Getters
     //Actions
     addProjects,
-    fetchProjects
-}
-})
+    fetchProjects,
+    updateProjects,
+    toggleCompleted,
+    removeProjects,
+    
+  };
+});
