@@ -60,6 +60,7 @@ export const createProject = async (title, description) => {
         title,
         description,
         user_id: userId,
+        completed: false,
       })
       .select();
 
@@ -132,3 +133,28 @@ export const deleteProject = async (projectId) => {
     return false;
   }
 };
+
+export const toggleCompletedProject = async (projectId, currentCompletedState) => {
+  try {
+    const { error } = await supabase
+      .from(TABLE_NAME)
+      .update({
+        completed: !currentCompletedState
+      })
+      .eq("id", projectId); //  filtro por el ID del proyecto;
+
+    //comprobamos error
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    // procesamos datos si hubiera que procesarlos
+    // ...
+
+    // devolvemos datos
+    return true;
+  } catch (err) {
+    console.error(err);
+    return false;
+  }
+}

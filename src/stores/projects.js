@@ -5,6 +5,7 @@ import {
   createProject,
   editProject,
   deleteProject,
+  toggleCompletedProject
 } from "@/api/supabase/projectsApi";
 
 export const useProjectsStore = defineStore("projects", () => {
@@ -64,6 +65,22 @@ export const useProjectsStore = defineStore("projects", () => {
     }
   }
 
+    
+  async function toggleCompleted(projectId) {
+    try {
+      const project = projects.value.find(pr => pr.id === projectId) 
+      if (!project) return
+
+      const isToggled = await toggleCompletedProject(projectId, project.completed)
+
+      if (isToggled) {
+        project.completed = !project.completed
+      }
+    }catch (err) {
+      console.error(err);
+    }
+  }
+
   async function removeProjects(projectId) {
     try {
       const isDeleted = await deleteProject(projectId);
@@ -81,6 +98,8 @@ export const useProjectsStore = defineStore("projects", () => {
     }
   }
 
+
+
   return {
     //State
     projects,
@@ -88,6 +107,8 @@ export const useProjectsStore = defineStore("projects", () => {
     addProjects,
     fetchProjects,
     updateProjects,
+    toggleCompleted,
     removeProjects,
+    
   };
 });

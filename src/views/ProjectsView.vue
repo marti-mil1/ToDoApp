@@ -1,4 +1,5 @@
 <script setup>
+import { toggleCompletedProject } from '@/api/supabase/projectsApi';
 import { useProjectsStore } from '@/stores/projects';
 import { useUserStore } from '@/stores/user';
 import { storeToRefs } from 'pinia';
@@ -97,14 +98,20 @@ onMounted(() => {
         <ul>
             <li v-for="project in projects" :key="project.id" class="task-card">
                 <div class="task-details">
-                    <h3>{{ project.title }}</h3>
-                    <p>{{ project.description }}</p>
+                    <h3 :class="{ completed: project.completed }">{{ project.title }}</h3>
+                    <p :class="{ completed: project.completed }">{{ project.description }}</p>
 
                 </div>
 
                 <div class="task-buttons">
-                    <button @click="_handleUpdate(project)">Edit</button>
+                    <button @click="_handleUpdate(project)" v-show="!project.completed">Edit</button>
                     <button @click="_handleRemove(project.id)">Remove</button>
+                </div>
+
+                <div class="task-complete">
+                    <input type="checkbox" :checked="project.completed"
+                        @change="projectsStore.toggleCompleted(project.id)">
+                    <label>Completed</label>
                 </div>
 
             </li>
@@ -115,8 +122,6 @@ onMounted(() => {
 
 <style scoped>
 main {
-    background-color: aqua;
-
     h1 {
         font-size: 23px;
     }
@@ -128,7 +133,8 @@ main {
         justify-content: flex-start;
         align-items: flex-start;
         gap: 5px;
-        background-color: pink;
+        margin: 40px auto;
+        background-color: lightgreen;
     }
 
     h2 {
@@ -148,9 +154,11 @@ main {
         border-radius: 2px;
     }
 
+
     .task-card {
         width: 100%;
         padding: 0;
+        margin-bottom: 10px;
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
@@ -171,6 +179,18 @@ main {
         display: flex;
         justify-content: flex-start;
         align-items: center;
+    }
+
+    .task-complete {
+        width: 100%;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+    }
+
+    .completed {
+        text-decoration: line-through;
+        color: grey;
     }
 }
 </style>
