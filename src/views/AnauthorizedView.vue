@@ -6,3 +6,6 @@ import { RouterLink } from "vue-router"
     <h1>Sorry, you are not logged in!</h1>
     <RouterLink to="/">Please go to Login</RouterLink>
 </template>
+
+<style scoped lang="scss">
+</style>

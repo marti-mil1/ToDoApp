@@ -120,8 +120,9 @@ onMounted(() => {
 </template>
 
 
-<style scoped>
+<style scoped lang="scss">
 main {
+
     h1 {
         font-size: 23px;
     }

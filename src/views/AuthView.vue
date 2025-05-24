@@ -47,7 +47,7 @@ const checkProjects = () => {
 
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 form {
   width: 250px;
   display: flex;
@@ -55,22 +55,24 @@ form {
   gap: px;
   justify-content: flex-start;
   align-items: flex-start;
-  gap: 5px
+  gap: 5px;
+
+  input,
+  button {
+    width: 100%;
+  }
+
+  h2 {
+    text-align: center;
+  }
+
+  button:hover {
+    background-color: lightyellow;
+    padding: 12px 0;
+    border: none;
+    border-radius: 2px;
+  }
 }
 
-input,
-button {
-  width: 100%;
-}
 
-h2 {
-  text-align: center;
-}
-
-button:hover {
-  background-color: lightyellow;
-  padding: 12px 0;
-  border: none;
-  border-radius: 2px;
-}
 </style>
