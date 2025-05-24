@@ -8,19 +8,45 @@ const router = useRouter()
 
 const userStore = useUserStore()
 
-const { email, password, user } = storeToRefs(userStore)
+const { email, password } = storeToRefs(userStore)
 
 const {
   register,
-  login,
-  fetchCurrentUser,
-  logout
+  login
 } = userStore
 
-const checkProjects = () => {
-  router.push('/projects')
+
+const _handleLogin = async () => {
+  try {
+    const success = await login()
+
+    if (success) {
+      router.push('/projects')
+    }
+
+    //una vez recibidos los datos limpiamos el formulario
+    email.value = ''
+    password.value = ''
+  } catch (err) {
+    console.error(err)
+  }
 }
 
+const _handleSignUp = async () => {
+  try {
+    const success = await register()
+
+    if (success) {
+      router.push('/projects')
+    }
+
+    //una vez recibidos los datos limpiamos el formulario
+    email.value = ''
+    password.value = ''
+  } catch (err) {
+    console.error(err)
+  }
+}
 </script>
 
 <template>
@@ -34,15 +60,9 @@ const checkProjects = () => {
 
     <br>
 
-    <button @click="register" v-show="!user">Create Account</button>
-    <button @click="login" v-show="!user">Login</button>
+    <button @click="_handleSignUp">Create Account</button>
+    <button @click="_handleLogin">Login</button>
 
-    <h2 v-show="user"> Welcome {{ email }} !</h2>
-
-   
-
-    <button @click="checkProjects" v-show="user">Check your pending projects</button>
-    <button @click="logout" v-show="user">Logout</button>
   </form>
 
 </template>
@@ -73,6 +93,4 @@ form {
     border-radius: 2px;
   }
 }
-
-
 </style>
