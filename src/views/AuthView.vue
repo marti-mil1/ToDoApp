@@ -67,8 +67,9 @@ const _handleSignUp = async () => {
 
     <br>
 
-    <button @click="_handleSignUp">Create Account</button>
     <button @click="_handleLogin">Login</button>
+    <button @click="_handleSignUp">Create Account</button>
+    
 
   </form>
 
