@@ -3,6 +3,8 @@
 import { useUserStore } from '../stores/user'
 import { storeToRefs } from 'pinia'
 import { useRouter } from 'vue-router'
+import { toast } from "vue3-toastify";
+import "vue3-toastify/dist/index.css";
 
 const router = useRouter()
 
@@ -29,6 +31,11 @@ const _handleLogin = async () => {
     password.value = ''
   } catch (err) {
     console.error(err)
+    toast("Login failed: invalid email or password!", {
+      "theme": "auto",
+      "type": "default",
+      "dangerouslyHTMLString": true
+    })
   }
 }
 
@@ -60,8 +67,9 @@ const _handleSignUp = async () => {
 
     <br>
 
-    <button @click="_handleSignUp">Create Account</button>
     <button @click="_handleLogin">Login</button>
+    <button @click="_handleSignUp">Create Account</button>
+    
 
   </form>
 

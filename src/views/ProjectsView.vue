@@ -86,6 +86,7 @@ onMounted(() => {
         <h1>Hello {{ user.email }} !</h1>
 
         <form @submit.prevent="_handleSubmit">
+        <h2>Add Cool Task:</h2>
 
             <label>
                 Title
@@ -99,10 +100,9 @@ onMounted(() => {
             <button type="submit">
                 {{ editingId ? 'Update Project' : 'Add project' }}
             </button>
-
         </form>
 
-        <h2>Pending Tasks</h2>
+        <h2>Pending Tasks:</h2>
 
         <ul>
             <li v-for="project in projects" :key="project.id" class="task-card">
@@ -127,7 +127,6 @@ onMounted(() => {
                 @cancel="closeModal">
             </ModalDelete>
             </li>
-
         </ul>
     </main>
 </template>
@@ -149,12 +148,10 @@ main {
         align-items: flex-start;
         gap: 5px;
         margin: 40px auto;
-        background-color: lightgreen;
     }
 
     h2 {
         font-size: 20px;
-        text-align: center;
     }
 
     button,
@@ -204,6 +201,10 @@ main {
     .completed {
         text-decoration: line-through;
         color: lightgray;
+    }
+
+    ul {
+        margin-top: 10px;
     }
 }
 </style>
