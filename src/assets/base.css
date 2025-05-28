@@ -1,11 +1,26 @@
 :root {
-  --grey: #2c3e50;
-  --white: #fff;
+  --black: #000;
+  --cream: #FDF1DE;
+  --yellow: #FFCC00;
+  --sky: #ACCAE8;
+  --chili: #FF5A54;
+  --pink: #FFB6D6;
+  --grass: #43B786;
+  --brown: #D0613D;
 }
 
-/* semantic color variables for this project */
-:root {
-  --color-background: var(--white);
-  --color-text: var(--grey);
+/* DARK MODE (default)*/
+body.dark-mode {
+  --background-color-dark-mode: var(--black);
+  --input-text-color-dark-mode: var(--cream);
+  --input-background-color-dark-mode: var(--black);
+  --input-stroke-color-dark-mode: var(--cream);
 }
 
+/* LIGHT MODE */
+body.light-mode {
+  --background-color-light-mode: var(--cream);
+  --input-text-color-light-mode: var(--black);
+  --input-background-color-light-mode: var(--black);
+  --input-stroke-color-light-mode: var(--black);
+}
