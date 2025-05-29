@@ -1,0 +1,20 @@
+@import "./base.css";
+
+.primary-btn,
+.secondary-btn {
+  font-family: var(--font-family);
+  font-size: var(--font-size-input);
+  font-weight: var(--font-weight-primary-btn);
+  line-height: var(--line-height);
+  font-size: var(--font-size-primary-btn);
+  border-radius: 30px;
+  border: none;
+}
+
+.primary-btn {
+  background-color: var(--primary-btn-background-color-dark-mode);
+}
+
+.secondary-btn {
+  background-color: var(--secondary-btn-background-color-dark-mode);
+}

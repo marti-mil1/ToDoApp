@@ -1,0 +1,101 @@
+:root {
+  /* -----COLORS----- */
+  --black: #000;
+  --cream: #fdf1de;
+  --yellow: #ffcc00;
+  --sky: #accae8;
+  --chili: #ff5a54;
+  --pink: #ffb6d6;
+  --grass: #43b786;
+  --brown: #d0613d;
+
+  /* DARK MODE (default)*/
+  --background-color-dark-mode: var(--black);
+  --input-text-color-dark-mode: var(--cream);
+  --input-background-color-dark-mode: var(--black);
+  --input-stroke-color-dark-mode: var(--cream);
+  --primary-btn-background-color-dark-mode: var(--yellow);
+  --secondary-btn-background-color-dark-mode: var(--sky);
+
+  /* LIGHT MODE */
+  --background-color-light-mode: var(--cream);
+  --input-text-color-light-mode: var(--black);
+  --input-background-color-light-mode: var(--black);
+  --input-stroke-color-light-mode: var(--black);
+  --primary-btn-background-color-light-mode: var(--chili);
+  --secondary-btn-background-color-light-mode: var(--pink);
+
+
+  /* -----FONTS----- */
+  --font-family: "Inter", sans-serif;
+  --line-height: 150%;
+
+  /* FONT SIZE */
+  --font-size-input: 1rem;
+  --font-size-usermail: 0.875rem;
+  --font-size-task-card-title: 1.25rem;
+  --font-size-task-card-description: 0.875rem;
+  --font-size-delete-modal: 0.875rem;
+  --font-size-delete-modal-btn: 0.875rem;
+  --font-size-primary-btn: 1rem;
+  --font-size-secondary-btn: 1rem;
+
+  /* FONT WEIGHT */
+  --font-weight-input: 400;
+  --font-weight-usermail: bold;
+  --font-weight-task-card-title: bold;
+  --font-weight-task-card-description: 400;
+  --font-weight-delete-modal: 400;
+  --font-weight-delete-modal-btn: 400;
+  --font-weight-primary-btn: bold;
+  --font-weight-secondary-btn: bold;  
+}
+
+/* @media (prefers-color-scheme: dark) {
+  :root {
+    --color-background: var(--background-color-dark-mode);
+    --input-text-color: var(--input-text-color-dark-mode);
+    --input-background-color: var(--input-background-color-dark-mode);
+    --input-stroke-color: var(--input-stroke-color-dark-mode);
+  }
+} */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  width: 100%;
+  height: 100vh;
+}
+
+body {
+  min-width: 320px;
+  width: 100%;
+  /* background-color: var(--background-color-dark-mode); */
+}
+
+#app {
+  max-width: 1440px;
+  margin-bottom: 0;
+}
+
+@media screen and (max-width: 767px) {
+  :root {
+    font-size: 16px;
+  }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1439px) {
+  :root {
+    font-size: 16px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  :root {
+    font-size: 16px;
+  }
+}

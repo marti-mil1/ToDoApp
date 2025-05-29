@@ -1,0 +1,19 @@
+@import './base.css';
+
+.input-field {
+  background-color: var(--input-background-color-dark-mode);
+  color: var(--input-text-color-dark-mode);
+  border: solid 1px;
+  border-color: var(--input-stroke-color-dark-mode);
+  border-radius: 30px;
+  padding-left: 1.5rem;
+  font-family: var(--font-family);
+  font-size: var(--font-size-input);
+  font-weight: var(--font-weight-input);
+  line-height: var(--line-height);
+}
+
+.input-field::placeholder {
+  font-size: var(--font-size-input);
+  color: var(--input-text-color-dark-mode);
+}

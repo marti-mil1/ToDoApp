@@ -56,49 +56,55 @@ const _handleSignUp = async () => {
 }
 </script>
 
+
+
 <template>
 
-  <h1>Home / Auth View</h1>
   <form @submit.prevent>
-    <label for="email">Your email:</label>
-    <input v-model="email" placeholder="email@example.com" type="text" id="email" required />
-    <label for="password">Your password:</label>
-    <input v-model="password" placeholder="password" type="password" id="password" required />
+    <div class="input-container">
+      <input v-model="email" placeholder="email@example.com" type="text" id="email" class="input-field" required />
+      <input v-model="password" placeholder="password" type="password" id="password" class="input-field" required />
+    </div>
+
 
     <br>
-
-    <button @click="_handleLogin">Login</button>
-    <button @click="_handleSignUp">Create Account</button>
-    
+    <div class="btn-container">
+      <button @click="_handleLogin" class="primary-btn">Login</button>
+      <button @click="_handleSignUp" class="secondary-btn">Create Account</button>
+    </div>
 
   </form>
 
 </template>
 
+
 <style scoped lang="scss">
+
 form {
-  width: 250px;
+  margin: auto;
+  margin-bottom: 0;
+  width: 17.5rem;
+  height: 15rem;
   display: flex;
   flex-direction: column;
-  gap: px;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: flex-start;
-  gap: 5px;
 
-  input,
-  button {
+  .input-container,
+  .btn-container {
     width: 100%;
+    height: 6rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
   }
 
-  h2 {
-    text-align: center;
-  }
-
-  button:hover {
-    background-color: lightyellow;
-    padding: 12px 0;
-    border: none;
-    border-radius: 2px;
+  .input-field,
+  .primary-btn,
+  .secondary-btn {
+    width: 100%;
+    height: 2.75rem;
   }
 }
 </style>
