@@ -19,6 +19,24 @@ const { projects } = storeToRefs(projectsStore)
 const userStore = useUserStore()
 const { user, logout } = userStore
 
+// const colors = [
+//     'var(--task-card-col-1)',
+//     'var(--task-card-col-2)',
+//     'var(--task-card-col-3)',
+//     'var(--task-card-col-4)',
+//     'var(--task-card-col-5)',
+//     'var(--task-card-col-6)'
+// ]
+
+const colors = [
+  'var(--task-card-col-1)',
+  'var(--task-card-col-2)',
+  'var(--task-card-col-3)',
+  'var(--task-card-col-4)',
+  'var(--task-card-col-5)',
+  'var(--task-card-col-6)'
+]
+
 
 const router = useRouter()
 
@@ -101,7 +119,7 @@ onMounted(() => {
         </form>
 
         <ul>
-            <li v-for="project in projects" :key="project.id" class="task-card">
+            <li v-for="(project,index) in projects" :key="project.id" class="task-card" :style="{ backgroundColor: colors[index % colors.length] }">
 
                 <div class="task-details">
                     <input type="checkbox" :checked="project.completed"
@@ -137,7 +155,7 @@ onMounted(() => {
     justify-content: flex-start;
     align-items: center;
 
-    background-color: skyblue;
+    background-color: grey;
 
     form {
         margin-top: 1rem;
@@ -169,8 +187,6 @@ onMounted(() => {
             border-radius: 100%;
         }
 
-
-
     }
 
     ul {
@@ -190,9 +206,7 @@ onMounted(() => {
             height: auto;
         }
 
-        li:only-child {
-            
-        }
+        li:only-child {}
 
         .task-card {
             margin-top: -2rem;
@@ -203,7 +217,6 @@ onMounted(() => {
             flex-direction: column;
             justify-content: flex-start;
             align-items: center;
-            border: solid grey 1px;
             border-radius: 1.875rem 1.875rem 0 0;
         }
 
@@ -234,4 +247,5 @@ onMounted(() => {
         }
     }
 }
+
 </style>

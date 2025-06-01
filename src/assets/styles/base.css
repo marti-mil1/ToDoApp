@@ -9,7 +9,7 @@
   --grass: #43b786;
   --brown: #d0613d;
 
-  /* DARK MODE (default)*/
+  /* ----- DARK MODE (default) ----- */
   --background-col: var(--black);
 
   /* navbar */
@@ -32,9 +32,18 @@
   /* buttons */
   --primary-btn-background-col: var(--yellow);
   --secondary-btn-background-col: var(--sky);
+
+  /* task cards */
+  --task-card-col-1: var(--sky);
+  --task-card-col-2: var(--yellow);
+  --task-card-col-3: var(--chili);
+  --task-card-col-4: var(--pink);
+  --task-card-col-3: var(--green);
+  --task-card-col-3: var(--brown);
 }
 
-/* LIGHT MODE (override)*/
+
+/* ----- LIGHT MODE (override) ----- */
 html.light {
   --background-col: var(--cream);
 
@@ -58,9 +67,17 @@ html.light {
   /* buttons */
   --primary-btn-background-col: var(--chili);
   --secondary-btn-background-col: var(--pink);
+
+   /* task cards */
+  --task-card-col-1: var(--pink);
+  --task-card-col-2: var(--chili);
+  --task-card-col-3: var(--sky);
+  --task-card-col-4: var(--yellow);
+  --task-card-col-3: var(--brown);
+  --task-card-col-3: var(--green);
 }
 
-/* -----FONTS----- */
+/* ----- FONTS ----- */
 :root {
   --font-family: "Inter", sans-serif;
   --line-height: 150%;
