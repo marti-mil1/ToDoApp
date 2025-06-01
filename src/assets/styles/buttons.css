@@ -30,7 +30,7 @@
 .update-task-btn {
   background-color: var(--secondary-btn-background-col);
   border: solid 1px var(--stroke-cole);
-  background-image: url('../icons/edit_30dp_000_FILL0_wght400_GRAD0_opsz24.svg');
+  background-image: url('../icons/edit-task.svg');
   background-repeat: no-repeat;
   background-position: 50% 50%;
 }

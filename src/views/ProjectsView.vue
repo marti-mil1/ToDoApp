@@ -107,7 +107,7 @@ onMounted(() => {
             <div class="input-container">
                 <input v-model="title" placeholder="Title" type="text" id="title" class="input-field" required />
                 <input v-model="description" placeholder="Description" type="text" id="description" class="input-field"/>
-                <button type="submit" class="add-task-btn">
+                <button type="submit" :class="editingId ? 'update-task-btn': 'add-task-btn'">
                 <!-- {{ editingId ? 'Update Project' : 'Add project' }} -->
             </button>
 

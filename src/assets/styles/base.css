@@ -12,17 +12,24 @@
   /* DARK MODE (default)*/
   --background-col: var(--black);
 
-  /* navbar & toggle */
+  /* navbar */
   --navbar-text-col: var(--cream);
+
+  /* toggle */
   --toggle-background-col: var(--cream);
   --toggle-btn-col: var(--black);
   --toggle-translateX: 0;
+
+  /*logout*/
   --logout-col: var(--cream);
 
+  /* inputs */
   --input-text-col: var(--cream);
   --input-background-col: var(--black);
   --input-stroke-col: var(--cream);
   --stroke-col: var(--cream);
+
+  /* buttons */
   --primary-btn-background-col: var(--yellow);
   --secondary-btn-background-col: var(--sky);
 }
@@ -31,17 +38,24 @@
 html.light {
   --background-col: var(--cream);
 
-  /* navbar & toggle */
+   /* navbar */
   --navbar-text-col: var(--black);
+
+   /* toggle */
   --toggle-background-col: var(--black);
   --toggle-btn-col: var(--cream);
   --toggle-translateX: 1.25rem;
+
+  /*logout*/
   --logout-col: var(--black);
 
+    /* inputs */
   --input-text-col: var(--black);
-  --input-background-col: var(--black);
+  --input-background-col: var(--cream);
   --input-stroke-col: var(--black);
   --stroke-col: var(--black);
+
+    /* buttons */
   --primary-btn-background-col: var(--chili);
   --secondary-btn-background-col: var(--pink);
 }
@@ -62,12 +76,12 @@ html.light {
   --font-size-secondary-btn: 1rem;
 
   /* FONT WEIGHT */
-  --font-weight-input: 400;
+  --font-weight-input: normal;
   --font-weight-usermail: bold;
   --font-weight-task-card-title: bold;
-  --font-weight-task-card-description: 400;
-  --font-weight-delete-modal: 400;
-  --font-weight-delete-modal-btn: 400;
+  --font-weight-task-card-description: normal;
+  --font-weight-delete-modal: normal;
+  --font-weight-delete-modal-btn: normal;
   --font-weight-primary-btn: bold;
   --font-weight-secondary-btn: bold;
 }
