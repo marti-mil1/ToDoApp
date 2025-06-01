@@ -1,10 +1,9 @@
-@import './base.css';
+@import "./base.css";
 
 .input-field {
   background-color: var(--input-background-color-dark-mode);
   color: var(--input-text-color-dark-mode);
-  border: solid 1px;
-  border-color: var(--input-stroke-color-dark-mode);
+  border: solid 1px var(--input-stroke-color-dark-mode);
   border-radius: 30px;
   padding-left: 1.5rem;
   font-family: var(--font-family);
@@ -14,6 +13,32 @@
 }
 
 .input-field::placeholder {
-  font-size: var(--font-size-input);
   color: var(--input-text-color-dark-mode);
+  font-family: var(--font-family);
+  font-size: var(--font-size-input);
+  font-weight: var(--font-weight-input);
+}
+
+/* MOBILE */
+@media screen and (max-width: 767px) {
+  .input-field {
+    width: 100%;
+    height: 2.75rem;
+  }
+}
+
+/* TABLET */
+@media screen and (min-width: 768px) and (max-width: 1339px) {
+  .input-field {
+    width: 100%;
+    height: 2.75rem;
+  }
+}
+
+/* DESKTOP */
+@media screen and (min-width: 1440px) {
+  .input-field {
+    width: 100%;
+    height: 3rem;
+  }
 }

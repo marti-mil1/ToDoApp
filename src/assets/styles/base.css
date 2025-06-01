@@ -11,20 +11,36 @@
 
   /* DARK MODE (default)*/
   --background-color-dark-mode: var(--black);
+
+  /* navbar & toggle */
+  --navbar-text-color-dark-mode: var(--cream);
+  --toggle-background-color-dark-mode: var(--cream);
+  --toggle-btn-color-dark-mode: var(--black);
+  --logout-color-dark-mode: var(--cream);
+  
   --input-text-color-dark-mode: var(--cream);
   --input-background-color-dark-mode: var(--black);
   --input-stroke-color-dark-mode: var(--cream);
+  --stroke-color-dark-mode: var(--cream);
   --primary-btn-background-color-dark-mode: var(--yellow);
   --secondary-btn-background-color-dark-mode: var(--sky);
 
+
   /* LIGHT MODE */
   --background-color-light-mode: var(--cream);
+
+    /* navbar & toggle */
+  --navbar-text-color-light-mode: var(--black);
+  --toggle-background-color-light-mode: var(--black);
+  --toggle-btn-color-light-mode: var(--cream);
+   --logout-color-light-mode: var(--black);
+  
   --input-text-color-light-mode: var(--black);
   --input-background-color-light-mode: var(--black);
   --input-stroke-color-light-mode: var(--black);
+  --stroke-color-light-mode: var(--black);
   --primary-btn-background-color-light-mode: var(--chili);
   --secondary-btn-background-color-light-mode: var(--pink);
-
 
   /* -----FONTS----- */
   --font-family: "Inter", sans-serif;
@@ -48,7 +64,7 @@
   --font-weight-delete-modal: 400;
   --font-weight-delete-modal-btn: 400;
   --font-weight-primary-btn: bold;
-  --font-weight-secondary-btn: bold;  
+  --font-weight-secondary-btn: bold;
 }
 
 /* @media (prefers-color-scheme: dark) {
@@ -66,20 +82,28 @@
   box-sizing: border-box;
 }
 
-html {
+html,
+body {
   width: 100%;
-  height: 100vh;
+  height: 100%;
 }
 
 body {
   min-width: 320px;
-  width: 100%;
-  /* background-color: var(--background-color-dark-mode); */
+  /* display: flex;
+  justify-content: center;
+  align-items: center; */
+  background-color: var(--background-color-dark-mode);
 }
 
 #app {
+  min-width: 320px;
   max-width: 1440px;
-  margin-bottom: 0;
+  width: 100%;
+  height: 100%;
+  /* display: flex;
+  justify-content: center;
+  align-items: center; */
 }
 
 @media screen and (max-width: 767px) {

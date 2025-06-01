@@ -18,3 +18,46 @@
 .secondary-btn {
   background-color: var(--secondary-btn-background-color-dark-mode);
 }
+
+.add-task-btn {
+  background-color: var(--primary-btn-background-color-dark-mode);
+  border: solid 1px var(--stroke-color-dark-mode);
+  background-image: url('../icons/add_30dp_000_FILL0_wght400_GRAD0_opsz24.svg');
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+}
+
+.update-task-btn {
+  background-color: var(--secondary-btn-background-color-dark-mode);
+  border: solid 1px var(--stroke-color-dark-mode);
+  background-image: url('../icons/edit_30dp_000_FILL0_wght400_GRAD0_opsz24.svg');
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+}
+
+/* MOBILE */
+@media screen and (max-width: 767px) {
+  .primary-btn,
+  .secondary-btn {
+    width: 100%;
+    height: 2.75rem;
+  }
+}
+
+/* TABLET */
+@media screen and (min-width: 768px) and (max-width: 1339px) {
+  .primary-btn,
+  .secondary-btn {
+    width: 100%;
+    height: 2.75rem;
+  }
+}
+
+/* DESKTOP */
+@media screen and (min-width: 1440px) {
+  .primary-btn,
+  .secondary-btn {
+    width: 100%;
+    height: 3rem;
+  }
+}

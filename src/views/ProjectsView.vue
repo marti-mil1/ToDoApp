@@ -5,6 +5,7 @@ import { useUserStore } from '@/stores/user';
 import { storeToRefs } from 'pinia';
 import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
+import Navbar from '@/components/Navbar.vue';
 
 const showModal = ref(false)
 const projectToDelete = ref(null)
@@ -44,10 +45,10 @@ const _handleUpdate = (project) => {
     editingId.value = project.id
 }
 
-const _handleLogout = async () => {
-    await logout()
-    router.push('/')
-}
+// const _handleLogout = async () => {
+//     await logout()
+//     router.push('/')
+// }
 
 const _handleRemove = async (projectId) => {
     try {
@@ -80,15 +81,17 @@ onMounted(() => {
 </script>
 
 <template>
-    <main>
-        <button @click="_handleLogout">Logout</button>
 
-        <h1>Hello {{ user.email }} !</h1>
+    <Navbar></Navbar>
+
+    <!-- <button @click="_handleLogout">Logout</button> -->
+
+    <!-- <h1>Hello {{ user.email }} !</h1> -->
+
+    <div class="projects-view">
 
         <form @submit.prevent="_handleSubmit">
-        <h2>Add Cool Task:</h2>
-
-            <label>
+            <!-- <label>
                 Title
                 <input type="text" v-model="title" required>
             </label>
@@ -99,10 +102,18 @@ onMounted(() => {
 
             <button type="submit">
                 {{ editingId ? 'Update Project' : 'Add project' }}
-            </button>
-        </form>
+            </button> -->
 
-        <h2>Pending Tasks:</h2>
+            <div class="input-container">
+                <input v-model="title" placeholder="Title" type="text" id="title" class="input-field" required />
+                <input v-model="description" placeholder="Description" type="text" id="description" class="input-field"/>
+                <button type="submit" class="add-task-btn">
+                <!-- {{ editingId ? 'Update Project' : 'Add project' }} -->
+            </button>
+
+                
+            </div>
+        </form>
 
         <ul>
             <li v-for="project in projects" :key="project.id" class="task-card">
@@ -120,45 +131,72 @@ onMounted(() => {
                     <button @click="showModalDelete(project)">Remove</button>
                 </div>
 
-                <ModalDelete
-                v-show="showModal && projectToDelete?.id === project.id"
-                :project="projectToDelete"
-                @confirm="_handleRemove"
-                @cancel="closeModal">
-            </ModalDelete>
+                <ModalDelete v-show="showModal && projectToDelete?.id === project.id" :project="projectToDelete"
+                    @confirm="_handleRemove" @cancel="closeModal">
+                </ModalDelete>
             </li>
         </ul>
-    </main>
+    </div>
+
+
+
 </template>
 
 
 <style scoped lang="scss">
-main {
-    
+.projects-view {
+    width: 100%;
+    height: calc(100% - 3rem); // navbar height
+    background-color: pink;
+    // padding: 1rem 1.25rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1rem;
+    padding: 0 1.25rem;
 
-    h1 {
-        font-size: 23px; 
+  form {
+    // margin: auto;
+    // margin-bottom: 0;
+    margin-top: 1rem;
+    width: 17.5rem;
+    height: 6rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+
+    .input-container {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
     }
 
-    form {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        align-items: flex-start;
-        gap: 5px;
-        margin: 40px auto;
+    .add-task-btn,
+    .update-task-btn {
+        position: absolute;
+        top: calc(50% - 26px);
+        right: 26px;
+        width: 44px;
+        height: 44px;
+        border-radius: 100%;
     }
+
+  }
 
     h2 {
         font-size: 20px;
     }
 
-    button,
-    input,
-    label {
-        width: 100%;
-    }
+    // button,
+    // input,
+    // label {
+    //     width: 100%;
+    // }
 
     button:hover {
         background-color: rgb(0, 136, 255);
@@ -206,5 +244,6 @@ main {
     ul {
         margin-top: 10px;
     }
+
 }
 </style>

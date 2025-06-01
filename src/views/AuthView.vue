@@ -59,52 +59,59 @@ const _handleSignUp = async () => {
 
 
 <template>
+  <div class="auth-view">
+    <form @submit.prevent>
+      <div class="input-container">
+        <input v-model="email" placeholder="email@email.com" type="text" id="email" class="input-field" required />
+        <input v-model="password" placeholder="password" type="password" id="password" class="input-field" required />
+      </div>
 
-  <form @submit.prevent>
-    <div class="input-container">
-      <input v-model="email" placeholder="email@example.com" type="text" id="email" class="input-field" required />
-      <input v-model="password" placeholder="password" type="password" id="password" class="input-field" required />
-    </div>
+
+      <br>
+      <div class="btn-container">
+        <button @click="_handleLogin" class="primary-btn">Login</button>
+        <button @click="_handleSignUp" class="secondary-btn">Create Account</button>
+      </div>
+
+    </form>
+
+  </div>
 
 
-    <br>
-    <div class="btn-container">
-      <button @click="_handleLogin" class="primary-btn">Login</button>
-      <button @click="_handleSignUp" class="secondary-btn">Create Account</button>
-    </div>
-
-  </form>
 
 </template>
 
 
 <style scoped lang="scss">
-
-form {
-  margin: auto;
-  margin-bottom: 0;
-  width: 17.5rem;
-  height: 15rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: flex-start;
-
-  .input-container,
-  .btn-container {
+@media screen and (max-width: 767px) {
+  .auth-view {
     width: 100%;
-    height: 6rem;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 40vh;
+  }
+
+  form {
+    // margin: auto;
+    // margin-bottom: 0;
+    width: 17.5rem;
+    height: 15rem;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    align-items: center;
-  }
+    align-items: flex-start;
 
-  .input-field,
-  .primary-btn,
-  .secondary-btn {
-    width: 100%;
-    height: 2.75rem;
+    .input-container,
+    .btn-container {
+      width: 100%;
+      height: 6rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+    }
   }
 }
 </style>
