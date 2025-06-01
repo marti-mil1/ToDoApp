@@ -84,34 +84,19 @@ onMounted(() => {
 
     <Navbar></Navbar>
 
-    <!-- <button @click="_handleLogout">Logout</button> -->
-
-    <!-- <h1>Hello {{ user.email }} !</h1> -->
 
     <div class="projects-view">
 
         <form @submit.prevent="_handleSubmit">
-            <!-- <label>
-                Title
-                <input type="text" v-model="title" required>
-            </label>
-            <label>
-                Description
-                <input type="text" v-model="description">
-            </label>
-
-            <button type="submit">
-                {{ editingId ? 'Update Project' : 'Add project' }}
-            </button> -->
-
             <div class="input-container">
-                <input v-model="title" placeholder="Title" type="text" id="title" class="input-field" required />
-                <input v-model="description" placeholder="Description" type="text" id="description" class="input-field"/>
-                <button type="submit" :class="editingId ? 'update-task-btn': 'add-task-btn'">
-                <!-- {{ editingId ? 'Update Project' : 'Add project' }} -->
-            </button>
 
-                
+                <input v-model="title" placeholder="Title" type="text" id="title" class="input-field" required />
+                <input v-model="description" placeholder="Description" type="text" id="description"
+                    class="input-field" />
+
+                <button type="submit" :class="editingId ? 'update-task-btn' : 'add-task-btn'">
+                </button>
+
             </div>
         </form>
 
@@ -146,106 +131,107 @@ onMounted(() => {
 <style scoped lang="scss">
 .projects-view {
     width: 100%;
-    height: calc(100% - 3rem); // navbar height
-    // background-color: pink;
-    // padding: 1rem 1.25rem;
+    height: calc(100% - 3rem); // - navbar height
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    gap: 1rem;
-    padding: 0 1.25rem;
 
-  form {
-    // margin: auto;
-    // margin-bottom: 0;
-    margin-top: 1rem;
-    width: 17.5rem;
-    height: 6rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
+    background-color: skyblue;
 
-    .input-container {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      align-items: center;
+    form {
+        margin-top: 1rem;
+        width: 17.5rem;
+        height: 6rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+
+        background-color: red;
+
+        .input-container {
+            width: 100%;
+            height: 6rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .add-task-btn,
+        .update-task-btn {
+            position: absolute;
+            top: calc(50% - 26px);
+            right: 26px;
+            width: 44px;
+            height: 44px;
+            border-radius: 100%;
+        }
+
+
+
     }
 
-    .add-task-btn,
-    .update-task-btn {
-        position: absolute;
-        top: calc(50% - 26px);
-        right: 26px;
-        width: 44px;
-        height: 44px;
-        border-radius: 100%;
+    ul {
+        margin-top: 1rem;
+        width: 17.5rem;
+        height: calc(100% - 6rem - 2rem);
+        // overflow-y: scroll;
+
+        background-color: yellow;
+
+        li:first-child {
+            margin-top: 0;
+        }
+
+        li:last-child {
+            border-radius: 1.875rem;
+            height: auto;
+        }
+
+        li:only-child {
+            
+        }
+
+        .task-card {
+            margin-top: -2rem;
+            width: 100%;
+            height: 10rem;
+            padding: 12px 1rem 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            border: solid grey 1px;
+            border-radius: 1.875rem 1.875rem 0 0;
+        }
+
+        .task-details {
+            width: 100%;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            gap: 40px;
+            background-color: green;
+
+            input {
+                width: 20px;
+            }
+        }
+
+        .task-buttons {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .completed {
+            text-decoration: line-through;
+            color: lightgray;
+        }
     }
-
-  }
-
-
-//   TOLGO DA QUI PROVA 
-//     h2 {
-//         font-size: 20px;
-//     }
-
-//     // button,
-//     // input,
-//     // label {
-//     //     width: 100%;
-//     // }
-
-//     button:hover {
-//         background-color: rgb(0, 136, 255);
-//         padding: 2px 0;
-//         border-radius: 2px;
-//     }
-
-//     .task-card {
-//         width: 100%;
-//         padding: 0;
-//         margin-bottom: 10px;
-//         display: flex;
-//         flex-direction: column;
-//         justify-content: flex-start;
-//         align-items: center;
-//         border: solid grey 1px;
-//         border-radius: 5px;
-//     }
-
-//     .task-details {
-//         width: 100%;
-//         display: flex;
-//         justify-content: flex-start;
-//         align-items: center;
-//         gap: 40px;
-
-//         input {
-//             width: 20px;
-//         }
-//     }
-
-//     .task-buttons {
-//         width: 100%;
-//         display: flex;
-//         flex-direction: column;
-//         justify-content: center;
-//         align-items: center;
-//     }
-
-//     .completed {
-//         text-decoration: line-through;
-//         color: lightgray;
-//     }
-
-//     ul {
-//         margin-top: 10px;
-//     }
-
 }
 </style>

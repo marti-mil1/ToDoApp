@@ -21,7 +21,7 @@
 
 .add-task-btn {
   background-color: var(--primary-btn-background-col);
-  border: solid 1px var(--stroke-col-dark-mode);
+  border: solid 1px var(--stroke-col);
   background-image: url('../icons/add-task.svg');
   background-repeat: no-repeat;
   background-position: 50% 50%;
@@ -29,7 +29,7 @@
 
 .update-task-btn {
   background-color: var(--secondary-btn-background-col);
-  border: solid 1px var(--stroke-cole);
+  border: solid 1px var(--stroke-col);
   background-image: url('../icons/edit-task.svg');
   background-repeat: no-repeat;
   background-position: 50% 50%;

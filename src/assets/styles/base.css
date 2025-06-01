@@ -38,10 +38,10 @@
 html.light {
   --background-col: var(--cream);
 
-   /* navbar */
+  /* navbar */
   --navbar-text-col: var(--black);
 
-   /* toggle */
+  /* toggle */
   --toggle-background-col: var(--black);
   --toggle-btn-col: var(--cream);
   --toggle-translateX: 1.25rem;
@@ -49,13 +49,13 @@ html.light {
   /*logout*/
   --logout-col: var(--black);
 
-    /* inputs */
+  /* inputs */
   --input-text-col: var(--black);
   --input-background-col: var(--cream);
   --input-stroke-col: var(--black);
   --stroke-col: var(--black);
 
-    /* buttons */
+  /* buttons */
   --primary-btn-background-col: var(--chili);
   --secondary-btn-background-col: var(--pink);
 }
@@ -97,6 +97,8 @@ html,
 body {
   width: 100%;
   height: 100%;
+  min-width: 320px;
+  max-width: 1440px;
 }
 
 body {
@@ -107,10 +109,10 @@ body {
 }
 
 #app {
-  min-width: 320px;
-  max-width: 1440px;
   width: 100%;
   height: 100%;
+  min-width: 320px;
+  max-width: 1440px;
 }
 
 @media screen and (max-width: 767px) {
