@@ -12,24 +12,24 @@
 }
 
 .primary-btn {
-  background-color: var(--primary-btn-background-color-dark-mode);
+  background-color: var(--primary-btn-background-col);
 }
 
 .secondary-btn {
-  background-color: var(--secondary-btn-background-color-dark-mode);
+  background-color: var(--secondary-btn-background-col);
 }
 
 .add-task-btn {
-  background-color: var(--primary-btn-background-color-dark-mode);
-  border: solid 1px var(--stroke-color-dark-mode);
-  background-image: url('../icons/add_30dp_000_FILL0_wght400_GRAD0_opsz24.svg');
+  background-color: var(--primary-btn-background-col);
+  border: solid 1px var(--stroke-col-dark-mode);
+  background-image: url('../icons/add-task.svg');
   background-repeat: no-repeat;
   background-position: 50% 50%;
 }
 
 .update-task-btn {
-  background-color: var(--secondary-btn-background-color-dark-mode);
-  border: solid 1px var(--stroke-color-dark-mode);
+  background-color: var(--secondary-btn-background-col);
+  border: solid 1px var(--stroke-cole);
   background-image: url('../icons/edit_30dp_000_FILL0_wght400_GRAD0_opsz24.svg');
   background-repeat: no-repeat;
   background-position: 50% 50%;

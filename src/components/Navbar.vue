@@ -3,12 +3,15 @@ import ToggleDarKLightMode from './ToggleDarKLightMode.vue';
 import { useUserStore } from '@/stores/user';
 import { storeToRefs } from 'pinia';
 import { useRouter } from 'vue-router';
-import { onMounted, ref } from 'vue';
+import { useThemeStore } from '@/stores/theme';
 
 const userStore = useUserStore()
 const { user, logout } = userStore
 
 const router = useRouter()
+
+const themeStore = useThemeStore()
+const { isDark } = storeToRefs(themeStore)
 
 const _handleLogout = async () => {
     await logout()
@@ -27,7 +30,7 @@ const _handleLogout = async () => {
         <!-- <h1> hello test </h1> -->
 
         <!-- <button @click="_handleLogout"><img src="../assets/icons/logout_24dp_000_FILL0_wght400_GRAD0_opsz24.svg"></button> -->
-         <img @click="_handleLogout" src="../assets/icons/logout_dark-mode.svg" class="logout-icon">
+         <img @click="_handleLogout" :src="isDark ? '/src/assets/icons/logout_dark-mode.svg' : '/src/assets/icons/logout-light-mode.svg'" class="logout-icon">
     </nav>
 
 </template>
@@ -37,23 +40,16 @@ const _handleLogout = async () => {
 .navbar {
     width: 100%;
     height: 3rem;
-    background-color: var(--background-color-dark-mode);
-    // background-color: pink;
-    border-bottom: solid 1px var(--stroke-color-dark-mode);
+    background-color: var(--background-col);
+    border-bottom: solid 1px var(--stroke-col);
     padding: 0 0.5rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
 
     h1 {
-        color: var(--navbar-text-color-dark-mode);
+        color: var(--navbar-text-col);
         font-size: var(--font-size-usermail);
-        font-family: var(--font-family);
-        line-height: var(--line-height);
-    }
-
-    .logout-icon {
-        color: pink;
     }
 }
 </style>

@@ -147,7 +147,7 @@ onMounted(() => {
 .projects-view {
     width: 100%;
     height: calc(100% - 3rem); // navbar height
-    background-color: pink;
+    // background-color: pink;
     // padding: 1rem 1.25rem;
     display: flex;
     flex-direction: column;
@@ -188,62 +188,64 @@ onMounted(() => {
 
   }
 
-    h2 {
-        font-size: 20px;
-    }
 
-    // button,
-    // input,
-    // label {
-    //     width: 100%;
-    // }
+//   TOLGO DA QUI PROVA 
+//     h2 {
+//         font-size: 20px;
+//     }
 
-    button:hover {
-        background-color: rgb(0, 136, 255);
-        padding: 2px 0;
-        border-radius: 2px;
-    }
+//     // button,
+//     // input,
+//     // label {
+//     //     width: 100%;
+//     // }
 
-    .task-card {
-        width: 100%;
-        padding: 0;
-        margin-bottom: 10px;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        align-items: center;
-        border: solid grey 1px;
-        border-radius: 5px;
-    }
+//     button:hover {
+//         background-color: rgb(0, 136, 255);
+//         padding: 2px 0;
+//         border-radius: 2px;
+//     }
 
-    .task-details {
-        width: 100%;
-        display: flex;
-        justify-content: flex-start;
-        align-items: center;
-        gap: 40px;
+//     .task-card {
+//         width: 100%;
+//         padding: 0;
+//         margin-bottom: 10px;
+//         display: flex;
+//         flex-direction: column;
+//         justify-content: flex-start;
+//         align-items: center;
+//         border: solid grey 1px;
+//         border-radius: 5px;
+//     }
 
-        input {
-            width: 20px;
-        }
-    }
+//     .task-details {
+//         width: 100%;
+//         display: flex;
+//         justify-content: flex-start;
+//         align-items: center;
+//         gap: 40px;
 
-    .task-buttons {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-    }
+//         input {
+//             width: 20px;
+//         }
+//     }
 
-    .completed {
-        text-decoration: line-through;
-        color: lightgray;
-    }
+//     .task-buttons {
+//         width: 100%;
+//         display: flex;
+//         flex-direction: column;
+//         justify-content: center;
+//         align-items: center;
+//     }
 
-    ul {
-        margin-top: 10px;
-    }
+//     .completed {
+//         text-decoration: line-through;
+//         color: lightgray;
+//     }
+
+//     ul {
+//         margin-top: 10px;
+//     }
 
 }
 </style>
