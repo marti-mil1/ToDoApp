@@ -1,6 +1,7 @@
 <script setup>
 import ModalDelete from '@/components/ModalDelete.vue';
 import { useProjectsStore } from '@/stores/projects';
+import { useThemeStore } from '@/stores/theme';
 import { useUserStore } from '@/stores/user';
 import { storeToRefs } from 'pinia';
 import { onMounted, ref } from 'vue';
@@ -19,14 +20,8 @@ const { projects } = storeToRefs(projectsStore)
 const userStore = useUserStore()
 const { user, logout } = userStore
 
-// const colors = [
-//     'var(--task-card-col-1)',
-//     'var(--task-card-col-2)',
-//     'var(--task-card-col-3)',
-//     'var(--task-card-col-4)',
-//     'var(--task-card-col-5)',
-//     'var(--task-card-col-6)'
-// ]
+const themeStore = useThemeStore();
+const { isDark } = storeToRefs(themeStore);
 
 const colors = [
     'var(--task-card-col-1)',
@@ -36,6 +31,10 @@ const colors = [
     'var(--task-card-col-5)',
     'var(--task-card-col-6)'
 ]
+
+const backToTop = () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
 
 
 const router = useRouter()
@@ -157,7 +156,11 @@ onMounted(() => {
                     @confirm="_handleRemove" @cancel="closeModal"> </ModalDelete>
 
             </li>
+
         </ul>
+
+        <img :src="isDark ? '/src/assets/icons/arrow_upward-dark-mode.svg' : '/src/assets/icons/arrow_upward-light-mode.svg'" class="back-to-top-btn" @click="backToTop">
+
     </div>
 
 
@@ -288,11 +291,22 @@ onMounted(() => {
                         border-radius: 100%;
                         padding: 0.125rem;
                     }
-
-
                 }
             }
         }
+    }
+
+    .back-to-top-btn {
+        z-index: 99;
+        background-color: var(--background-col);
+        border: solid 1px var(--stroke-col);
+        border-radius: 100%;
+        position: fixed;
+        width: 2.75rem;
+        height: 2.75rem;
+        padding: 0.5rem;
+        bottom: 1rem;
+        left: calc(50% - 2.75rem / 2);
     }
 }
 </style>
