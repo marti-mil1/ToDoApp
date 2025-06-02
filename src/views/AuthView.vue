@@ -60,6 +60,7 @@ const _handleSignUp = async () => {
 
 <template>
   <div class="auth-view">
+    <img class="logo-icon" src="/src/assets/icons/logo-icon.svg">
     <form @submit.prevent>
       <div class="input-container">
         <input v-model="email" placeholder="email@email.com" type="text" id="email" class="input-field" required />
@@ -87,17 +88,21 @@ const _handleSignUp = async () => {
   .auth-view {
     width: 100%;
     height: 100%;
+    min-width: 320px;
+    min-height: 600px;
+    padding: 4.375rem 1.25rem;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: space-between;
     align-items: center;
-    padding-top: 40vh;
+
   }
 
   form {
     // margin: auto;
     // margin-bottom: 0;
     width: 17.5rem;
-    height: 15rem;
+    height: 13rem;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -106,7 +111,7 @@ const _handleSignUp = async () => {
     .input-container,
     .btn-container {
       width: 100%;
-      height: 6rem;
+      min-height: 6rem;
       display: flex;
       flex-direction: column;
       justify-content: space-between;

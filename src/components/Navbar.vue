@@ -50,6 +50,9 @@ const _handleLogout = async () => {
     h1 {
         color: var(--navbar-text-col);
         font-size: var(--font-size-usermail);
+        line-height: var(--line-height);
+        text-align: center;
+        width: auto;
     }
 }
 </style>
