@@ -61,7 +61,7 @@ const _handleSignUp = async () => {
 <template>
   <div class="auth-view">
     <div class="auth-container">
-      <img class="logo-icon" src="/src/assets/icons/logo-icon.svg">
+      <img class="logo-icon" src="/src/assets/icons/logo-with-stroke.svg" alt="logo-icon">
       <form @submit.prevent>
         <div class="input-container">
           <input v-model="email" placeholder="email@email.com" type="text" id="email" class="input-field" required />
