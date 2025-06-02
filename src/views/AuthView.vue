@@ -60,26 +60,21 @@ const _handleSignUp = async () => {
 
 <template>
   <div class="auth-view">
-    <img class="logo-icon" src="/src/assets/icons/logo-icon.svg">
-    <form @submit.prevent>
-      <div class="input-container">
-        <input v-model="email" placeholder="email@email.com" type="text" id="email" class="input-field" required />
-        <input v-model="password" placeholder="password" type="password" id="password" class="input-field" required />
-      </div>
+    <div class="auth-container">
+      <img class="logo-icon" src="/src/assets/icons/logo-icon.svg">
+      <form @submit.prevent>
+        <div class="input-container">
+          <input v-model="email" placeholder="email@email.com" type="text" id="email" class="input-field" required />
+          <input v-model="password" placeholder="password" type="password" id="password" class="input-field" required />
+        </div>
 
-
-      <br>
-      <div class="btn-container">
-        <button @click="_handleLogin" class="primary-btn">Login</button>
-        <button @click="_handleSignUp" class="secondary-btn">Create Account</button>
-      </div>
-
-    </form>
-
+        <div class="btn-container">
+          <button @click="_handleLogin" class="primary-btn">Login</button>
+          <button @click="_handleSignUp" class="secondary-btn">Create Account</button>
+        </div>
+      </form>
+    </div>
   </div>
-
-
-
 </template>
 
 
@@ -90,32 +85,39 @@ const _handleSignUp = async () => {
     height: 100%;
     min-width: 320px;
     min-height: 600px;
-    padding: 4.375rem 1.25rem;
+    padding: 0 1.25rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .auth-container {
+    width: 100%;
+    height: 30rem;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
 
-  }
-
-  form {
-    // margin: auto;
-    // margin-bottom: 0;
-    width: 17.5rem;
-    height: 13rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: flex-start;
-
-    .input-container,
-    .btn-container {
-      width: 100%;
-      min-height: 6rem;
+    form {
+      // margin: auto;
+      // margin-bottom: 0;
+      width: 17.5rem;
+      height: 13rem;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      align-items: center;
+      align-items: flex-start;
+
+      .input-container,
+      .btn-container {
+        width: 100%;
+        height: 6rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+      }
     }
   }
 }

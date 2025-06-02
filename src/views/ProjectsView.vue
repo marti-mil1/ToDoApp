@@ -29,12 +29,12 @@ const { user, logout } = userStore
 // ]
 
 const colors = [
-  'var(--task-card-col-1)',
-  'var(--task-card-col-2)',
-  'var(--task-card-col-3)',
-  'var(--task-card-col-4)',
-  'var(--task-card-col-5)',
-  'var(--task-card-col-6)'
+    'var(--task-card-col-1)',
+    'var(--task-card-col-2)',
+    'var(--task-card-col-3)',
+    'var(--task-card-col-4)',
+    'var(--task-card-col-5)',
+    'var(--task-card-col-6)'
 ]
 
 
@@ -100,10 +100,11 @@ onMounted(() => {
 
 <template>
 
+
+
     <Navbar></Navbar>
-
-
     <div class="projects-view">
+
 
         <form @submit.prevent="_handleSubmit">
             <div class="input-container">
@@ -119,24 +120,42 @@ onMounted(() => {
         </form>
 
         <ul>
-            <li v-for="(project,index) in projects" :key="project.id" class="task-card" :style="{ backgroundColor: colors[index % colors.length] }">
+            <li v-for="(project, index) in projects" :key="project.id" class="task-card" :style="{
+                backgroundColor: colors[index % colors.length],
+                zIndex: index
+            }">
 
-                <div class="task-details">
-                    <input type="checkbox" :checked="project.completed"
-                        @change="projectsStore.toggleCompleted(project.id)">
-                    <h3 :class="{ completed: project.completed }">{{ project.title }}</h3>
-                    <p :class="{ completed: project.completed }">{{ project.description }}</p>
-                </div>
+                <div class="task-info-container">
 
-                <div class="task-buttons">
-                    <button @click="_handleUpdate(project)" v-show="!project.completed">Edit</button>
-                    <!-- <button @click="_handleRemove(project.id)">Remove</button> -->
-                    <button @click="showModalDelete(project)">Remove</button>
+                    <div class="task-details">
+                        <h3 :class="{ completed: project.completed }">{{ project.title }}</h3>
+                        <p :class="{ completed: project.completed }">{{ project.description }}</p>
+                    </div>
+
+
+                    <div class="task-buttons">
+                        <!-- <input type="checkbox" :checked="project.completed"
+                        @change="projectsStore.toggleCompleted(project.id)"> -->
+                        <img src="/src/assets/icons/complete-task.svg" class="checked-btn" :checked="project.completed"
+                            @click="projectsStore.toggleCompleted(project.id)">
+
+                        <!-- <button @click="_handleUpdate(project)" v-show="!project.completed">Edit</button> -->
+                        <img src="/src/assets/icons/edit-task.svg" class="edit-btn" @click="_handleUpdate(project)"
+                            v-show="!project.completed && !(showModal && projectToDelete?.id === project.id)">
+
+                        <!-- <button @click="_handleRemove(project.id)">Remove</button> -->
+                        <!-- <img src="/src/assets/icons/delete-task.svg" class="delete-btn" @click="_handleRemove(project.id)"> -->
+
+                        <img src="/src/assets/icons/delete-task.svg" class="delete-btn"
+                            @click="showModalDelete(project)">
+                        <!-- <button @click="showModalDelete(project)">Remove</button> -->
+                    </div>
+
                 </div>
 
                 <ModalDelete v-show="showModal && projectToDelete?.id === project.id" :project="projectToDelete"
-                    @confirm="_handleRemove" @cancel="closeModal">
-                </ModalDelete>
+                    @confirm="_handleRemove" @cancel="closeModal"> </ModalDelete>
+
             </li>
         </ul>
     </div>
@@ -149,24 +168,19 @@ onMounted(() => {
 <style scoped lang="scss">
 .projects-view {
     width: 100%;
-    height: calc(100% - 3rem); // - navbar height
+    // height: calc(100% - 3rem);
+    min-width: 320px;
+    min-height: 600px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
 
-    background-color: grey;
-
     form {
         margin-top: 1rem;
         width: 17.5rem;
         height: 6rem;
-        display: flex;
-        justify-content: center;
-        align-items: center;
         position: relative;
-
-        background-color: red;
 
         .input-container {
             width: 100%;
@@ -186,7 +200,6 @@ onMounted(() => {
             height: 44px;
             border-radius: 100%;
         }
-
     }
 
     ul {
@@ -194,8 +207,6 @@ onMounted(() => {
         width: 17.5rem;
         height: calc(100% - 6rem - 2rem);
         // overflow-y: scroll;
-
-        background-color: yellow;
 
         li:first-child {
             margin-top: 0;
@@ -211,41 +222,77 @@ onMounted(() => {
         .task-card {
             margin-top: -2rem;
             width: 100%;
-            height: 10rem;
-            padding: 12px 1rem 2rem;
+            height: auto;
+            // padding: 1rem 1rem 2.5rem;
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
-            align-items: center;
+            align-items: flex-start;
             border-radius: 1.875rem 1.875rem 0 0;
-        }
+            position: relative;
 
-        .task-details {
-            width: 100%;
-            display: flex;
-            justify-content: flex-start;
-            align-items: center;
-            gap: 40px;
-            background-color: green;
+            .task-info-container {
+                margin: 1rem 1rem 2.5rem;
+                width: calc(100% - 2rem);
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-start;
+                gap: 1rem;
 
-            input {
-                width: 20px;
+                .task-details {
+                    width: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: flex-start;
+                    align-items: flex-start;
+
+                    h3,
+                    p {
+                        font-family: var(--font-family);
+                        color: var(--task-card-text);
+                        line-height: var(--line-height);
+                    }
+
+                    h3 {
+                        font-size: var(--font-size-task-card-title);
+                        font-weight: var(--font-weight-task-card-title);
+                    }
+
+                    p {
+                        font-size: var(--font-size-task-card-description);
+                        font-weight: var(--font-weight-task-card-description);
+                    }
+                }
+
+                .completed {
+                    text-decoration: line-through;
+                    text-decoration-color: var(--cream);
+                    text-decoration-thickness: 1.2px;
+                }
+
+                .task-buttons {
+                    width: 2rem;
+                    height: auto;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: flex-start;
+                    align-items: center;
+                    gap: 0.8rem;
+
+                    .checked-btn,
+                    .edit-btn,
+                    .delete-btn {
+                        width: 2rem;
+                        height: 2rem;
+                        border: solid 1px var(--black);
+                        border-radius: 100%;
+                        padding: 0.125rem;
+                    }
+
+
+                }
             }
-        }
-
-        .task-buttons {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .completed {
-            text-decoration: line-through;
-            color: lightgray;
         }
     }
 }
-
 </style>
