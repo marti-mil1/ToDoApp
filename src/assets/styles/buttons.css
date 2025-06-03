@@ -22,7 +22,7 @@
 .add-task-btn {
   background-color: var(--primary-btn-background-col);
   border: solid 1px var(--stroke-col);
-  background-image: url('../icons/add-task.svg');
+  background-image: url("../icons/add-task.svg");
   background-repeat: no-repeat;
   background-position: 50% 50%;
 }
@@ -30,34 +30,13 @@
 .update-task-btn {
   background-color: var(--secondary-btn-background-col);
   border: solid 1px var(--stroke-col);
-  background-image: url('../icons/edit-task.svg');
+  background-image: url("../icons/edit-task.svg");
   background-repeat: no-repeat;
   background-position: 50% 50%;
 }
 
-/* MOBILE */
-@media screen and (max-width: 767px) {
-  .primary-btn,
-  .secondary-btn {
-    width: 100%;
-    height: 2.75rem;
-  }
-}
-
-/* TABLET */
-@media screen and (min-width: 768px) and (max-width: 1339px) {
-  .primary-btn,
-  .secondary-btn {
-    width: 100%;
-    height: 2.75rem;
-  }
-}
-
-/* DESKTOP */
-@media screen and (min-width: 1440px) {
-  .primary-btn,
-  .secondary-btn {
-    width: 100%;
-    height: 3rem;
-  }
+.primary-btn,
+.secondary-btn {
+  width: 100%;
+  height: 2.75rem;
 }

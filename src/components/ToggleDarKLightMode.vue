@@ -32,6 +32,6 @@ const { toggleTheme, isDark } = themeStore;
     border-radius: 100%;
     background-color: var(--toggle-btn-col);
     transform: translateX(var(--toggle-translateX));
-    transition: transform 0.8s ease, background-color 0.3s ease;
+    transition: transform 0.5s ease, background-color 0.3s ease;
 }
 </style>
