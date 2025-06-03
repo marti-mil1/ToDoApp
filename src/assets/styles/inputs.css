@@ -9,6 +9,8 @@
   font-size: var(--font-size-input);
   font-weight: var(--font-weight-input);
   line-height: var(--line-height);
+  width: 17.5rem;
+  min-height: 2.75rem;
 }
 
 .input-field::placeholder {
@@ -16,9 +18,4 @@
   font-family: var(--font-family);
   font-size: var(--font-size-input);
   font-weight: var(--font-weight-input);
-}
-
-.input-field {
-  width: 100%;
-  min-height: 2.75rem;
 }

@@ -88,7 +88,7 @@ const _handleLogout = async () => {
         justify-content: flex-end;
         align-items: center;
         gap: 0.5rem;
-        width: auto
+        width: auto;
     }
 }
 </style>

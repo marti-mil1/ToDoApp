@@ -62,11 +62,6 @@ const _handleUpdate = (project) => {
     editingId.value = project.id
 }
 
-// const _handleLogout = async () => {
-//     await logout()
-//     router.push('/')
-// }
-
 const _handleRemove = async (projectId) => {
     try {
         await projectsStore.removeProjects(projectId)
@@ -101,7 +96,7 @@ onMounted(() => {
 
     <Navbar></Navbar>
 
-    <!-- MOBILE VIEW -->
+    <!-- MOBILE VIEW
     <div class="projects-view-mobile">
 
         <form @submit.prevent="_handleSubmit">
@@ -155,10 +150,10 @@ onMounted(() => {
 
         <img :src="isDark ? '/src/assets/icons/arrow_upward-dark-mode.svg' : '/src/assets/icons/arrow_upward-light-mode.svg'"
             class="back-to-top-btn" @click="backToTop">
-    </div>
+    </div> -->
 
     <!-- TABLET VIEW -->
-    <div class="projects-view-tablet">
+    <div class="projects-view">
 
         <section class="form-section">
             <form @submit.prevent="_handleSubmit">
@@ -175,7 +170,7 @@ onMounted(() => {
             </form>
         </section>
 
-        <section class="tasks-section-tablet">
+        <section class="tasks-section">
             <ul>
                 <li v-for="(project, index) in projects" :key="project.id" class="task-card" :style="{
                     backgroundColor: colors[index % colors.length],
@@ -222,15 +217,23 @@ onMounted(() => {
 
 <style scoped lang="scss">
 // ----- MOBILE VIEW
-@media screen and (max-width: 767px) {
-    .projects-view-mobile {
-        width: 100%;
+@media screen and (max-width: 768px) {
+    .projects-view {
         min-width: 320px;
-        height: auto;
+        width: 100%;
+        height: calc(100% - 3rem); //navbar height
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
         align-items: center;
+    }
+
+    .form-section {
+        min-width: 100%;
+        height: auto;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
 
         form {
             margin-top: 1rem;
@@ -258,286 +261,284 @@ onMounted(() => {
             }
         }
 
-        ul {
-            margin-top: 1rem;
-            width: 17.5rem;
-            height: calc(100% - 6rem - 2rem);
-
-            li:first-child {
-                margin-top: 0;
-            }
-
-            li:last-child {
-                border-radius: 1.875rem;
-                height: auto;
-                margin-bottom: 2rem;
-            }
-
-            li:only-child {}
-
-            .task-card {
-                margin-top: -2rem;
-                width: 100%;
-                height: auto;
-                display: flex;
-                flex-direction: column;
-                justify-content: flex-start;
-                align-items: flex-start;
-                border-radius: 1.875rem 1.875rem 0 0;
-                position: relative;
-
-                .task-info-container {
-                    margin: 1rem 1rem 2.5rem;
-                    width: calc(100% - 2rem);
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: flex-start;
-                    gap: 1rem;
-
-                    .task-details {
-                        width: 100%;
-                        display: flex;
-                        flex-direction: column;
-                        justify-content: flex-start;
-                        align-items: flex-start;
-
-                        h3,
-                        p {
-                            font-family: var(--font-family);
-                            color: var(--task-card-text);
-                            line-height: var(--line-height);
-                        }
-
-                        h3 {
-                            font-size: var(--font-size-task-card-title);
-                            font-weight: var(--font-weight-task-card-title);
-                        }
-
-                        p {
-                            font-size: var(--font-size-task-card-description);
-                            font-weight: var(--font-weight-task-card-description);
-                        }
-                    }
-
-                    .completed {
-                        text-decoration: line-through;
-                        text-decoration-color: var(--cream);
-                        text-decoration-thickness: 1.2px;
-                    }
-
-                    .task-buttons {
-                        width: 2rem;
-                        height: auto;
-                        display: flex;
-                        flex-direction: column;
-                        justify-content: flex-start;
-                        align-items: center;
-                        gap: 0.8rem;
-
-                        .checked-btn,
-                        .edit-btn,
-                        .delete-btn {
-                            width: 2rem;
-                            height: 2rem;
-                            border: solid 1px var(--black);
-                            border-radius: 100%;
-                            padding: 0.125rem;
-                        }
-                    }
-                }
-            }
-        }
-
-        .back-to-top-btn {
-            z-index: 99;
-            background-color: var(--background-col);
-            border: solid 1px var(--stroke-col);
-            border-radius: 100%;
-            position: fixed;
-            width: 2.75rem;
-            height: 2.75rem;
-            padding: 0.5rem;
-            bottom: 1rem;
-            left: calc(50% - 2.75rem / 2);
-        }
     }
 
-    .projects-view-tablet {
-        display: none;
-    }
-
-    .projects-view-desktop {
-        display: none;
-    }
-}
-
-
-// ----- TABLET VIEW
-@media screen and (min-width: 768px) and (max-width: 1339px) {
-    .projects-view-mobile {
-        display: none;
-    }
-
-    .projects-view-tablet {
+    .tasks-section {
         width: 100%;
+        height: calc(100% - 6rem - 2rem);
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+    }
+
+    ul {
+        margin: 1rem auto;
+        width: auto;
         height: 100%;
         display: flex;
+        flex-direction: column;
         justify-content: flex-start;
-        align-items: flex-start;
+        align-items: center;
 
-        .form-section {
-            min-width: 21.5rem;
-            height: 100%;
+        li:first-child {
+            margin-top: 0;
+        }
+
+        li:last-child {
+            border-radius: 1.875rem;
+            height: auto;
+            margin-bottom: 2rem;
+        }
+
+        .task-card {
+            margin-top: -1.8rem;
+            width: 280px;
+            height: auto;
+            // padding: 1rem 1rem 2.5rem;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
+            justify-content: flex-start;
             align-items: flex-start;
-            
-            form {
-                margin: 1rem auto;
-                width: 17.5rem;
-                height: 6rem;
-                position: relative;
+            border-radius: var(--border-radius) var(--border-radius) 0 0;
+            position: relative;
 
-                .input-container {
+            .task-info-container {
+                margin: 1rem 1rem 2.5rem;
+                width: calc(100% - 2rem);
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-start;
+                gap: 1rem;
+
+                .task-details {
                     width: 100%;
-                    height: 6rem;
                     display: flex;
                     flex-direction: column;
-                    justify-content: space-between;
-                    align-items: center;
-                }
-
-                .add-task-btn,
-                .update-task-btn {
-                    position: absolute;
-                    top: calc(50% - 26px);
-                    right: 26px;
-                    width: 44px;
-                    height: 44px;
-                    border-radius: 100%;
-                }
-            }
-        }
-
-        .tasks-section-tablet {
-            min-width: 26.54rem;
-            min-height: 100%;
-            height: auto;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            flex-grow: 1;
-            padding: 0 2rem;
-            border-left: solid 1px var(--stroke-col);
-        }
-
-        ul {
-            margin-top: 1rem;
-            width: 100%;
-            height: calc(100% - 6rem - 2rem);
-            // overflow-y: scroll;
-
-            li:first-child {
-                margin-top: 0;
-            }
-
-            li:last-child {
-                border-radius: 1.875rem;
-                height: auto;
-                margin-bottom: 2rem;
-            }
-
-            li:only-child {}
-
-            .task-card {
-                margin-top: -1.8rem;
-                width: 100%;
-                height: auto;
-                // padding: 1rem 1rem 2.5rem;
-                display: flex;
-                flex-direction: column;
-                justify-content: flex-start;
-                align-items: flex-start;
-                border-radius: 1.875rem 1.875rem 0 0;
-                position: relative;
-
-                .task-info-container {
-                    margin: 1rem 1rem 2.5rem;
-                    width: calc(100% - 2rem);
-                    display: flex;
-                    justify-content: space-between;
+                    justify-content: flex-start;
                     align-items: flex-start;
-                    gap: 1rem;
 
-                    .task-details {
-                        width: 100%;
-                        display: flex;
-                        flex-direction: column;
-                        justify-content: flex-start;
-                        align-items: flex-start;
-
-                        h3,
-                        p {
-                            font-family: var(--font-family);
-                            color: var(--task-card-text);
-                            line-height: var(--line-height);
-                        }
-
-                        h3 {
-                            font-size: var(--font-size-task-card-title);
-                            font-weight: var(--font-weight-task-card-title);
-                        }
-
-                        p {
-                            font-size: var(--font-size-task-card-description);
-                            font-weight: var(--font-weight-task-card-description);
-                        }
+                    h3,
+                    p {
+                        font-family: var(--font-family);
+                        color: var(--task-card-text);
+                        line-height: var(--line-height);
                     }
 
-                    .completed {
-                        text-decoration: line-through;
-                        text-decoration-color: var(--cream);
-                        text-decoration-thickness: 1.2px;
+                    h3 {
+                        font-size: var(--font-size-task-card-title);
+                        font-weight: var(--font-weight-task-card-title);
                     }
 
-                    .task-buttons {
+                    p {
+                        font-size: var(--font-size-task-card-description);
+                        font-weight: var(--font-weight-task-card-description);
+                    }
+                }
+
+                .completed {
+                    text-decoration: line-through;
+                    text-decoration-color: var(--cream);
+                    text-decoration-thickness: 1.2px;
+                }
+
+                .task-buttons {
+                    width: 2rem;
+                    height: auto;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: flex-start;
+                    align-items: center;
+                    gap: 0.8rem;
+
+                    .checked-btn,
+                    .edit-btn,
+                    .delete-btn {
                         width: 2rem;
-                        height: auto;
-                        display: flex;
-                        flex-direction: column;
-                        justify-content: flex-start;
-                        align-items: center;
-                        gap: 0.8rem;
-
-                        .checked-btn,
-                        .edit-btn,
-                        .delete-btn {
-                            width: 2rem;
-                            height: 2rem;
-                            border: solid 1px var(--black);
-                            border-radius: 100%;
-                            padding: 0.125rem;
-                        }
+                        height: 2rem;
+                        border: solid 1px var(--black);
+                        border-radius: 100%;
+                        padding: 0.125rem;
                     }
                 }
             }
-        }
-
-        .back-to-top-btn {
-            z-index: 99;
-            background-color: var(--background-col);
-            border: solid 1px var(--stroke-col);
-            border-radius: 100%;
-            position: fixed;
-            width: 2.75rem;
-            height: 2.75rem;
-            padding: 0.5rem;
-            bottom: 1rem;
         }
     }
 
-    .project-view-desktop {
-        display: none;
+    .back-to-top-btn {
+        z-index: 99;
+        background-color: var(--background-col);
+        border: solid 1px var(--stroke-col);
+        border-radius: 100%;
+        position: fixed;
+        width: 2.75rem;
+        height: 2.75rem;
+        padding: 0.5rem;
+        bottom: 1rem;
     }
 }
-</style>
+
+// // --- TABLET VIEW
+// @media screen and (min-width: 768px) and (max-width: 1339px) {
+//     .projects-view {
+//         display: flex;
+//         justify-content: flex-start;
+//         align-items: center;
+//     }
+
+//     .tasks-section {
+//         border-left: solid 1px var(--stroke-col);
+//         min-width: 26.54rem;
+//         min-height: 100%;
+//         display: flex;
+//         justify-content: center;
+//         align-items: flex-start;
+//         flex-grow: 1;
+//     }
+// }
+
+// ----- ALL
+
+// .projects-view {
+//     min-width: 320px;
+//     width: 100%;
+//     max-width: 100%;
+//     min-height: 100vh;
+//     height: calc(100% - 3rem); //navbar height
+// }
+
+// .form-section {
+//     min-width: 21.5rem;
+//     background-color: purple;
+//     height: 100%;
+//     display: flex;
+//     justify-content: flex-start;
+//     align-items: flex-start;
+
+//     form {
+//         margin: 1rem auto 0;
+//         width: 17.5rem;
+//         height: 6rem;
+//         position: relative;
+
+//         .input-container {
+//             width: 100%;
+//             height: 6rem;
+//             display: flex;
+//             flex-direction: column;
+//             justify-content: space-between;
+//             align-items: center;
+//         }
+
+//         .add-task-btn,
+//         .update-task-btn {
+//             position: absolute;
+//             top: calc(50% - 26px);
+//             right: 26px;
+//             width: 44px;
+//             height: 44px;
+//             border-radius: 100%;
+//         }
+//     }
+// }
+
+// .tasks-section {
+//     min-width: 26.54rem;
+//     min-height: 100%;
+//     height: auto;
+//     padding: 0 4rem;
+//     background-color: pink;
+// }
+
+
+// ul {
+//     margin: 1rem auto;
+//     width: 100%;
+//     height: calc(100% - 6rem - 2rem);
+//     // overflow-y: scroll;
+
+//     li:first-child {
+//         margin-top: 0;
+//     }
+
+//     li:last-child {
+//         border-radius: 1.875rem;
+//         height: auto;
+//         margin-bottom: 2rem;
+//     }
+
+//     li:only-child {}
+
+//     .task-card {
+//         margin-top: -1.8rem;
+//         width: 100%;
+//         height: auto;
+//         // padding: 1rem 1rem 2.5rem;
+//         display: flex;
+//         flex-direction: column;
+//         justify-content: flex-start;
+//         align-items: flex-start;
+//         border-radius: 1.875rem 1.875rem 0 0;
+//         position: relative;
+
+//         .task-info-container {
+//             margin: 1rem 1rem 2.5rem;
+//             width: calc(100% - 2rem);
+//             display: flex;
+//             justify-content: space-between;
+//             align-items: flex-start;
+//             gap: 1rem;
+
+//             .task-details {
+//                 width: 100%;
+//                 display: flex;
+//                 flex-direction: column;
+//                 justify-content: flex-start;
+//                 align-items: flex-start;
+
+//                 h3,
+//                 p {
+//                     font-family: var(--font-family);
+//                     color: var(--task-card-text);
+//                     line-height: var(--line-height);
+//                 }
+
+//                 h3 {
+//                     font-size: var(--font-size-task-card-title);
+//                     font-weight: var(--font-weight-task-card-title);
+//                 }
+
+//                 p {
+//                     font-size: var(--font-size-task-card-description);
+//                     font-weight: var(--font-weight-task-card-description);
+//                 }
+//             }
+
+//             .completed {
+//                 text-decoration: line-through;
+//                 text-decoration-color: var(--cream);
+//                 text-decoration-thickness: 1.2px;
+//             }
+
+//             .task-buttons {
+//                 width: 2rem;
+//                 height: auto;
+//                 display: flex;
+//                 flex-direction: column;
+//                 justify-content: flex-start;
+//                 align-items: center;
+//                 gap: 0.8rem;
+
+//                 .checked-btn,
+//                 .edit-btn,
+//                 .delete-btn {
+//                     width: 2rem;
+//                     height: 2rem;
+//                     border: solid 1px var(--black);
+//                     border-radius: 100%;
+//                     padding: 0.125rem;
+//                 }
+//             }
+//         }
+//     }
+// }</style>
