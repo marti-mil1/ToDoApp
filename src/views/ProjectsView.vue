@@ -33,7 +33,7 @@ const colors = [
 ]
 
 const backToTop = () => {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 
@@ -99,11 +99,10 @@ onMounted(() => {
 
 <template>
 
-
-
     <Navbar></Navbar>
-    <div class="projects-view">
 
+    <!-- MOBILE VIEW -->
+    <div class="projects-view-mobile">
 
         <form @submit.prevent="_handleSubmit">
             <div class="input-container">
@@ -133,21 +132,16 @@ onMounted(() => {
 
 
                     <div class="task-buttons">
-                        <!-- <input type="checkbox" :checked="project.completed"
-                        @change="projectsStore.toggleCompleted(project.id)"> -->
+
                         <img src="/src/assets/icons/complete-task.svg" class="checked-btn" :checked="project.completed"
                             @click="projectsStore.toggleCompleted(project.id)">
 
-                        <!-- <button @click="_handleUpdate(project)" v-show="!project.completed">Edit</button> -->
                         <img src="/src/assets/icons/edit-task.svg" class="edit-btn" @click="_handleUpdate(project)"
                             v-show="!project.completed && !(showModal && projectToDelete?.id === project.id)">
 
-                        <!-- <button @click="_handleRemove(project.id)">Remove</button> -->
-                        <!-- <img src="/src/assets/icons/delete-task.svg" class="delete-btn" @click="_handleRemove(project.id)"> -->
 
                         <img src="/src/assets/icons/delete-task.svg" class="delete-btn"
                             @click="showModalDelete(project)">
-                        <!-- <button @click="showModalDelete(project)">Remove</button> -->
                     </div>
 
                 </div>
@@ -159,154 +153,391 @@ onMounted(() => {
 
         </ul>
 
-        <img :src="isDark ? '/src/assets/icons/arrow_upward-dark-mode.svg' : '/src/assets/icons/arrow_upward-light-mode.svg'" class="back-to-top-btn" @click="backToTop">
-
+        <img :src="isDark ? '/src/assets/icons/arrow_upward-dark-mode.svg' : '/src/assets/icons/arrow_upward-light-mode.svg'"
+            class="back-to-top-btn" @click="backToTop">
     </div>
 
+    <!-- TABLET VIEW -->
+    <div class="projects-view-tablet">
 
+        <section class="form-section">
+            <form @submit.prevent="_handleSubmit">
+                <div class="input-container">
+
+                    <input v-model="title" placeholder="Title" type="text" id="title" class="input-field" required />
+                    <input v-model="description" placeholder="Description" type="text" id="description"
+                        class="input-field" />
+
+                    <button type="submit" :class="editingId ? 'update-task-btn' : 'add-task-btn'">
+                    </button>
+
+                </div>
+            </form>
+        </section>
+
+        <section class="tasks-section-tablet">
+            <ul>
+                <li v-for="(project, index) in projects" :key="project.id" class="task-card" :style="{
+                    backgroundColor: colors[index % colors.length],
+                    zIndex: index
+                }">
+
+                    <div class="task-info-container">
+
+                        <div class="task-details">
+                            <h3 :class="{ completed: project.completed }">{{ project.title }}</h3>
+                            <p :class="{ completed: project.completed }">{{ project.description }}</p>
+                        </div>
+
+
+                        <div class="task-buttons">
+
+                            <img src="/src/assets/icons/complete-task.svg" class="checked-btn"
+                                :checked="project.completed" @click="projectsStore.toggleCompleted(project.id)">
+
+                            <img src="/src/assets/icons/edit-task.svg" class="edit-btn" @click="_handleUpdate(project)"
+                                v-show="!project.completed && !(showModal && projectToDelete?.id === project.id)">
+
+
+                            <img src="/src/assets/icons/delete-task.svg" class="delete-btn"
+                                @click="showModalDelete(project)">
+                        </div>
+
+                    </div>
+
+                    <ModalDelete v-show="showModal && projectToDelete?.id === project.id" :project="projectToDelete"
+                        @confirm="_handleRemove" @cancel="closeModal"> </ModalDelete>
+
+                </li>
+            </ul>
+
+            <img :src="isDark ? '/src/assets/icons/arrow_upward-dark-mode.svg' : '/src/assets/icons/arrow_upward-light-mode.svg'"
+                class="back-to-top-btn" @click="backToTop">
+        </section>
+
+    </div>
 
 </template>
 
 
 <style scoped lang="scss">
-.projects-view {
-    width: 100%;
-    // height: calc(100% - 3rem);
-    min-width: 320px;
-    min-height: 600px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
+// ----- MOBILE VIEW
+@media screen and (max-width: 767px) {
+    .projects-view-mobile {
+        width: 100%;
+        min-width: 320px;
+        height: auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
 
-    form {
-        margin-top: 1rem;
-        width: 17.5rem;
-        height: 6rem;
-        position: relative;
-
-        .input-container {
-            width: 100%;
+        form {
+            margin-top: 1rem;
+            width: 17.5rem;
             height: 6rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .add-task-btn,
-        .update-task-btn {
-            position: absolute;
-            top: calc(50% - 26px);
-            right: 26px;
-            width: 44px;
-            height: 44px;
-            border-radius: 100%;
-        }
-    }
-
-    ul {
-        margin-top: 1rem;
-        width: 17.5rem;
-        height: calc(100% - 6rem - 2rem);
-        // overflow-y: scroll;
-
-        li:first-child {
-            margin-top: 0;
-        }
-
-        li:last-child {
-            border-radius: 1.875rem;
-            height: auto;
-        }
-
-        li:only-child {}
-
-        .task-card {
-            margin-top: -2rem;
-            width: 100%;
-            height: auto;
-            // padding: 1rem 1rem 2.5rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            align-items: flex-start;
-            border-radius: 1.875rem 1.875rem 0 0;
             position: relative;
 
-            .task-info-container {
-                margin: 1rem 1rem 2.5rem;
-                width: calc(100% - 2rem);
+            .input-container {
+                width: 100%;
+                height: 6rem;
                 display: flex;
+                flex-direction: column;
                 justify-content: space-between;
+                align-items: center;
+            }
+
+            .add-task-btn,
+            .update-task-btn {
+                position: absolute;
+                top: calc(50% - 26px);
+                right: 26px;
+                width: 44px;
+                height: 44px;
+                border-radius: 100%;
+            }
+        }
+
+        ul {
+            margin-top: 1rem;
+            width: 17.5rem;
+            height: calc(100% - 6rem - 2rem);
+
+            li:first-child {
+                margin-top: 0;
+            }
+
+            li:last-child {
+                border-radius: 1.875rem;
+                height: auto;
+                margin-bottom: 2rem;
+            }
+
+            li:only-child {}
+
+            .task-card {
+                margin-top: -2rem;
+                width: 100%;
+                height: auto;
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-start;
                 align-items: flex-start;
-                gap: 1rem;
+                border-radius: 1.875rem 1.875rem 0 0;
+                position: relative;
 
-                .task-details {
-                    width: 100%;
+                .task-info-container {
+                    margin: 1rem 1rem 2.5rem;
+                    width: calc(100% - 2rem);
                     display: flex;
-                    flex-direction: column;
-                    justify-content: flex-start;
+                    justify-content: space-between;
                     align-items: flex-start;
+                    gap: 1rem;
 
-                    h3,
-                    p {
-                        font-family: var(--font-family);
-                        color: var(--task-card-text);
-                        line-height: var(--line-height);
+                    .task-details {
+                        width: 100%;
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: flex-start;
+                        align-items: flex-start;
+
+                        h3,
+                        p {
+                            font-family: var(--font-family);
+                            color: var(--task-card-text);
+                            line-height: var(--line-height);
+                        }
+
+                        h3 {
+                            font-size: var(--font-size-task-card-title);
+                            font-weight: var(--font-weight-task-card-title);
+                        }
+
+                        p {
+                            font-size: var(--font-size-task-card-description);
+                            font-weight: var(--font-weight-task-card-description);
+                        }
                     }
 
-                    h3 {
-                        font-size: var(--font-size-task-card-title);
-                        font-weight: var(--font-weight-task-card-title);
+                    .completed {
+                        text-decoration: line-through;
+                        text-decoration-color: var(--cream);
+                        text-decoration-thickness: 1.2px;
                     }
 
-                    p {
-                        font-size: var(--font-size-task-card-description);
-                        font-weight: var(--font-weight-task-card-description);
-                    }
-                }
-
-                .completed {
-                    text-decoration: line-through;
-                    text-decoration-color: var(--cream);
-                    text-decoration-thickness: 1.2px;
-                }
-
-                .task-buttons {
-                    width: 2rem;
-                    height: auto;
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: flex-start;
-                    align-items: center;
-                    gap: 0.8rem;
-
-                    .checked-btn,
-                    .edit-btn,
-                    .delete-btn {
+                    .task-buttons {
                         width: 2rem;
-                        height: 2rem;
-                        border: solid 1px var(--black);
-                        border-radius: 100%;
-                        padding: 0.125rem;
+                        height: auto;
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: flex-start;
+                        align-items: center;
+                        gap: 0.8rem;
+
+                        .checked-btn,
+                        .edit-btn,
+                        .delete-btn {
+                            width: 2rem;
+                            height: 2rem;
+                            border: solid 1px var(--black);
+                            border-radius: 100%;
+                            padding: 0.125rem;
+                        }
                     }
                 }
             }
         }
+
+        .back-to-top-btn {
+            z-index: 99;
+            background-color: var(--background-col);
+            border: solid 1px var(--stroke-col);
+            border-radius: 100%;
+            position: fixed;
+            width: 2.75rem;
+            height: 2.75rem;
+            padding: 0.5rem;
+            bottom: 1rem;
+            left: calc(50% - 2.75rem / 2);
+        }
     }
 
-    .back-to-top-btn {
-        z-index: 99;
-        background-color: var(--background-col);
-        border: solid 1px var(--stroke-col);
-        border-radius: 100%;
-        position: fixed;
-        width: 2.75rem;
-        height: 2.75rem;
-        padding: 0.5rem;
-        bottom: 1rem;
-        left: calc(50% - 2.75rem / 2);
+    .projects-view-tablet {
+        display: none;
+    }
+
+    .projects-view-desktop {
+        display: none;
+    }
+}
+
+
+// ----- TABLET VIEW
+@media screen and (min-width: 768px) and (max-width: 1339px) {
+    .projects-view-mobile {
+        display: none;
+    }
+
+    .projects-view-tablet {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+
+        .form-section {
+            min-width: 21.5rem;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            
+            form {
+                margin: 1rem auto;
+                width: 17.5rem;
+                height: 6rem;
+                position: relative;
+
+                .input-container {
+                    width: 100%;
+                    height: 6rem;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-between;
+                    align-items: center;
+                }
+
+                .add-task-btn,
+                .update-task-btn {
+                    position: absolute;
+                    top: calc(50% - 26px);
+                    right: 26px;
+                    width: 44px;
+                    height: 44px;
+                    border-radius: 100%;
+                }
+            }
+        }
+
+        .tasks-section-tablet {
+            min-width: 26.54rem;
+            min-height: 100%;
+            height: auto;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            flex-grow: 1;
+            padding: 0 2rem;
+            border-left: solid 1px var(--stroke-col);
+        }
+
+        ul {
+            margin-top: 1rem;
+            width: 100%;
+            height: calc(100% - 6rem - 2rem);
+            // overflow-y: scroll;
+
+            li:first-child {
+                margin-top: 0;
+            }
+
+            li:last-child {
+                border-radius: 1.875rem;
+                height: auto;
+                margin-bottom: 2rem;
+            }
+
+            li:only-child {}
+
+            .task-card {
+                margin-top: -1.8rem;
+                width: 100%;
+                height: auto;
+                // padding: 1rem 1rem 2.5rem;
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: flex-start;
+                border-radius: 1.875rem 1.875rem 0 0;
+                position: relative;
+
+                .task-info-container {
+                    margin: 1rem 1rem 2.5rem;
+                    width: calc(100% - 2rem);
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: flex-start;
+                    gap: 1rem;
+
+                    .task-details {
+                        width: 100%;
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: flex-start;
+                        align-items: flex-start;
+
+                        h3,
+                        p {
+                            font-family: var(--font-family);
+                            color: var(--task-card-text);
+                            line-height: var(--line-height);
+                        }
+
+                        h3 {
+                            font-size: var(--font-size-task-card-title);
+                            font-weight: var(--font-weight-task-card-title);
+                        }
+
+                        p {
+                            font-size: var(--font-size-task-card-description);
+                            font-weight: var(--font-weight-task-card-description);
+                        }
+                    }
+
+                    .completed {
+                        text-decoration: line-through;
+                        text-decoration-color: var(--cream);
+                        text-decoration-thickness: 1.2px;
+                    }
+
+                    .task-buttons {
+                        width: 2rem;
+                        height: auto;
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: flex-start;
+                        align-items: center;
+                        gap: 0.8rem;
+
+                        .checked-btn,
+                        .edit-btn,
+                        .delete-btn {
+                            width: 2rem;
+                            height: 2rem;
+                            border: solid 1px var(--black);
+                            border-radius: 100%;
+                            padding: 0.125rem;
+                        }
+                    }
+                }
+            }
+        }
+
+        .back-to-top-btn {
+            z-index: 99;
+            background-color: var(--background-col);
+            border: solid 1px var(--stroke-col);
+            border-radius: 100%;
+            position: fixed;
+            width: 2.75rem;
+            height: 2.75rem;
+            padding: 0.5rem;
+            bottom: 1rem;
+        }
+    }
+
+    .project-view-desktop {
+        display: none;
     }
 }
 </style>
