@@ -56,49 +56,67 @@ const _handleSignUp = async () => {
 }
 </script>
 
+
+
 <template>
+  
+  <div class="auth-view">
+    <div class="auth-container">
+      <img class="logo-icon" src="/src/assets/icons/logo-with-stroke.svg" alt="logo-icon">
+      <form @submit.prevent>
+        <div class="inputs-container">
+          <input v-model="email" placeholder="email@email.com" type="text" id="email" class="input-field" required />
+          <input v-model="password" placeholder="password" type="password" id="password" class="input-field" required />
+        </div>
 
-  <h1>Home / Auth View</h1>
-  <form @submit.prevent>
-    <label for="email">Your email:</label>
-    <input v-model="email" placeholder="email@example.com" type="text" id="email" required />
-    <label for="password">Your password:</label>
-    <input v-model="password" placeholder="password" type="password" id="password" required />
-
-    <br>
-
-    <button @click="_handleLogin">Login</button>
-    <button @click="_handleSignUp">Create Account</button>
-    
-
-  </form>
+        <div class="btns-container">
+          <button @click="_handleLogin" class="primary-btn">Login</button>
+          <button @click="_handleSignUp" class="secondary-btn">Create Account</button>
+        </div>
+      </form>
+    </div>
+  </div>
 
 </template>
 
+
 <style scoped lang="scss">
-form {
-  width: 250px;
+.auth-view {
+  min-width: 320px;
+  width: 100%;
+  max-width: 100%;
+  min-height: 100vh;
+  height: 100%;
   display: flex;
-  flex-direction: column;
-  gap: px;
-  justify-content: flex-start;
-  align-items: flex-start;
-  gap: 5px;
+  justify-content: center;
+  align-items: center;
 
-  input,
-  button {
-    width: 100%;
-  }
+  .auth-container {
+    width: 17.5rem;
+    height: 30rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
 
-  h2 {
-    text-align: center;
-  }
+    form {
+      width: 100%;
+      height: 13rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: flex-start;
 
-  button:hover {
-    background-color: lightyellow;
-    padding: 12px 0;
-    border: none;
-    border-radius: 2px;
+      .inputs-container,
+      .btns-container {
+        width: 100%;
+        height: 6rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+      }
+    }
   }
 }
 </style>

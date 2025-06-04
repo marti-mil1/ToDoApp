@@ -1,4 +1,4 @@
-import "./assets/main.css";
+import "./assets/styles/styles.css";
 
 import { createApp } from "vue";
 import { createPinia } from "pinia";
@@ -8,6 +8,8 @@ import "vue3-toastify/dist/index.css";
 
 import App from "./App.vue";
 import router from "./router";
+
+import { useThemeStore } from "./stores/theme";
 
 const app = createApp(App);
 const pinia = createPinia();
@@ -21,4 +23,9 @@ app.use(Vue3Toastify, {
   // ...
 });
 
+const themeStore = useThemeStore();
+themeStore.initTheme();
+
 app.mount("#app");
+
+

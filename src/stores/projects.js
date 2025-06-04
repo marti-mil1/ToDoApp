@@ -109,6 +109,5 @@ export const useProjectsStore = defineStore("projects", () => {
     updateProjects,
     toggleCompleted,
     removeProjects,
-    
   };
 });

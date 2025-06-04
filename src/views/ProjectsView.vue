@@ -1,10 +1,13 @@
 <script setup>
 import ModalDelete from '@/components/ModalDelete.vue';
 import { useProjectsStore } from '@/stores/projects';
+import { useThemeStore } from '@/stores/theme';
 import { useUserStore } from '@/stores/user';
 import { storeToRefs } from 'pinia';
 import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
+import Navbar from '@/components/Navbar.vue';
+import ToTopBtn from '@/components/ToTopBtn.vue';
 
 const showModal = ref(false)
 const projectToDelete = ref(null)
@@ -18,6 +21,17 @@ const { projects } = storeToRefs(projectsStore)
 const userStore = useUserStore()
 const { user, logout } = userStore
 
+const themeStore = useThemeStore();
+const { isDark } = storeToRefs(themeStore);
+
+const colors = [
+    'var(--task-card-col-1)',
+    'var(--task-card-col-2)',
+    'var(--task-card-col-3)',
+    'var(--task-card-col-4)',
+    'var(--task-card-col-5)',
+    'var(--task-card-col-6)'
+]
 
 const router = useRouter()
 
@@ -42,11 +56,6 @@ const _handleUpdate = (project) => {
     title.value = project.title
     description.value = project.description
     editingId.value = project.id
-}
-
-const _handleLogout = async () => {
-    await logout()
-    router.push('/')
 }
 
 const _handleRemove = async (projectId) => {
@@ -80,131 +89,536 @@ onMounted(() => {
 </script>
 
 <template>
-    <main>
-        <button @click="_handleLogout">Logout</button>
 
-        <h1>Hello {{ user.email }} !</h1>
+    <Navbar></Navbar>
 
-        <form @submit.prevent="_handleSubmit">
-        <h2>Add Cool Task:</h2>
+    <div class="projects-view">
 
-            <label>
-                Title
-                <input type="text" v-model="title" required>
-            </label>
-            <label>
-                Description
-                <input type="text" v-model="description">
-            </label>
+        <section class="form-section">
+            <form @submit.prevent="_handleSubmit">
+                <div class="input-container">
 
-            <button type="submit">
-                {{ editingId ? 'Update Project' : 'Add project' }}
-            </button>
-        </form>
+                    <input v-model="title" placeholder="Title" type="text" id="title" class="input-field" required />
+                    <input v-model="description" placeholder="Description" type="text" id="description"
+                        class="input-field" />
 
-        <h2>Pending Tasks:</h2>
+                    <button type="submit" :class="editingId ? 'update-task-btn' : 'add-task-btn'">
+                    </button>
 
-        <ul>
-            <li v-for="project in projects" :key="project.id" class="task-card">
-
-                <div class="task-details">
-                    <input type="checkbox" :checked="project.completed"
-                        @change="projectsStore.toggleCompleted(project.id)">
-                    <h3 :class="{ completed: project.completed }">{{ project.title }}</h3>
-                    <p :class="{ completed: project.completed }">{{ project.description }}</p>
                 </div>
+            </form>
+        </section>
 
-                <div class="task-buttons">
-                    <button @click="_handleUpdate(project)" v-show="!project.completed">Edit</button>
-                    <!-- <button @click="_handleRemove(project.id)">Remove</button> -->
-                    <button @click="showModalDelete(project)">Remove</button>
-                </div>
+        <section class="tasks-section">
+            <ul>
+                <li v-for="(project, index) in projects" :key="project.id" class="task-card" :style="{
+                    backgroundColor: colors[index % colors.length],
+                    zIndex: index
+                }">
 
-                <ModalDelete
-                v-show="showModal && projectToDelete?.id === project.id"
-                :project="projectToDelete"
-                @confirm="_handleRemove"
-                @cancel="closeModal">
-            </ModalDelete>
-            </li>
-        </ul>
-    </main>
+                    <div class="task-info-container">
+
+                        <div class="task-details">
+                            <h3 :class="{ completed: project.completed }">{{ project.title }}</h3>
+                            <p :class="{ completed: project.completed }">{{ project.description }}</p>
+                        </div>
+
+
+                        <div class="task-buttons">
+
+                            <img src="/src/assets/icons/complete-task.svg" class="checked-btn"
+                                :checked="project.completed" @click="projectsStore.toggleCompleted(project.id)">
+
+                            <img src="/src/assets/icons/edit-task.svg" class="edit-btn" @click="_handleUpdate(project)"
+                                v-show="!project.completed && !(showModal && projectToDelete?.id === project.id)">
+
+
+                            <img src="/src/assets/icons/delete-task.svg" class="delete-btn"
+                                @click="showModalDelete(project)">
+                        </div>
+
+                    </div>
+
+                    <ModalDelete v-show="showModal && projectToDelete?.id === project.id" :project="projectToDelete"
+                        @confirm="_handleRemove" @cancel="closeModal"> </ModalDelete>
+
+                </li>
+            </ul>
+
+            <!-- <img :src="isDark ? '/src/assets/icons/arrow_upward-dark-mode.svg' : '/src/assets/icons/arrow_upward-light-mode.svg'"
+                class="back-to-top-btn" @click="backToTop"> -->
+
+            <ToTopBtn></ToTopBtn>
+
+
+        </section>
+
+    </div>
+
 </template>
 
 
 <style scoped lang="scss">
-main {
-    
-
-    h1 {
-        font-size: 23px; 
-    }
-
-    form {
+// ----- MOBILE VIEW
+@media screen and (max-width: 768px) {
+    .projects-view {
+        min-width: 320px;
         width: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        align-items: flex-start;
-        gap: 5px;
-        margin: 40px auto;
-    }
-
-    h2 {
-        font-size: 20px;
-    }
-
-    button,
-    input,
-    label {
-        width: 100%;
-    }
-
-    button:hover {
-        background-color: rgb(0, 136, 255);
-        padding: 2px 0;
-        border-radius: 2px;
-    }
-
-    .task-card {
-        width: 100%;
-        padding: 0;
-        margin-bottom: 10px;
+        height: calc(100% - 3rem); //navbar height
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
         align-items: center;
-        border: solid grey 1px;
-        border-radius: 5px;
+        margin-bottom: 1rem;
     }
 
-    .task-details {
-        width: 100%;
+    .form-section {
+        min-width: 100%;
+        height: auto;
         display: flex;
-        justify-content: flex-start;
-        align-items: center;
-        gap: 40px;
-
-        input {
-            width: 20px;
-        }
-    }
-
-    .task-buttons {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
         justify-content: center;
-        align-items: center;
+        align-items: flex-start;
+
+        form {
+            margin-top: 1rem;
+            width: 17.5rem;
+            height: 6rem;
+            position: relative;
+
+            .input-container {
+                width: 100%;
+                height: 6rem;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .add-task-btn,
+            .update-task-btn {
+                position: absolute;
+                top: calc(50% - 26px);
+                right: 26px;
+                width: 44px;
+                height: 44px;
+                border-radius: 100%;
+                cursor: pointer;
+            }
+        }
+
     }
 
-    .completed {
-        text-decoration: line-through;
-        color: lightgray;
+    .tasks-section {
+        width: 100%;
+        height: calc(100% - 6rem - 2rem);
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
     }
 
     ul {
-        margin-top: 10px;
+        margin: 1rem auto;
+        width: auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+
+        li:first-child {
+            margin-top: 0;
+        }
+
+        li:last-child {
+            border-radius: var(--border-radius);
+            height: auto;
+            margin-bottom: 2rem;
+        }
+
+        .task-card {
+            margin-top: -1.8rem;
+            width: 280px;
+            height: auto;
+            // padding: 1rem 1rem 2.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-start;
+            border-radius: var(--border-radius) var(--border-radius) 0 0;
+            position: relative;
+
+            .task-info-container {
+                margin: 1rem 1rem 2.5rem;
+                width: calc(100% - 2rem);
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-start;
+                gap: 1rem;
+
+
+                .task-details {
+                    width: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: flex-start;
+                    align-items: flex-start;
+
+                    h3,
+                    p {
+                        font-family: var(--font-family);
+                        color: var(--task-card-text);
+                        line-height: var(--line-height);
+                    }
+
+                    h3 {
+                        font-size: var(--font-size-task-card-title);
+                        font-weight: var(--font-weight-task-card-title);
+                    }
+
+                    p {
+                        font-size: var(--font-size-task-card-description);
+                        font-weight: var(--font-weight-task-card-description);
+                    }
+                }
+
+                .completed {
+                    text-decoration: line-through;
+                    text-decoration-color: var(--cream);
+                    text-decoration-thickness: 1.2px;
+                }
+
+                .task-buttons {
+                    width: 2rem;
+                    height: auto;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: flex-start;
+                    align-items: center;
+                    gap: 0.8rem;
+
+                    .checked-btn,
+                    .edit-btn,
+                    .delete-btn {
+                        width: 2rem;
+                        height: 2rem;
+                        border: solid 1px var(--black);
+                        border-radius: 100%;
+                        padding: 0.125rem;
+                        cursor: pointer;
+
+                        &:hover {
+                            border: solid 2px var(--black);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+// --- TABLET VIEW
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+    .projects-view {
+        width: 100%;
+        height: calc(100% - 3rem); //navbar height
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+    }
+
+    .form-section {
+        width: 21.5rem;
+        height: auto;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+
+        form {
+            margin-top: 1rem;
+            width: 17.5rem;
+            height: 6rem;
+            position: relative;
+
+            .input-container {
+                width: 100%;
+                height: 6rem;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .add-task-btn,
+            .update-task-btn {
+                position: absolute;
+                top: calc(50% - 26px);
+                right: 26px;
+                width: 44px;
+                height: 44px;
+                border-radius: 100%;
+                cursor: pointer;
+            }
+        }
+    }
+
+    .tasks-section {
+        width: calc(100% - 21.5rem);
+        min-height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        border-left: solid 1px var(--stroke-col);
+    }
+
+    ul {
+        margin: 1rem auto;
+        width: auto;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+
+        li:first-child {
+            margin-top: 0;
+        }
+
+        li:last-child {
+            border-radius: var(--border-radius);
+            height: auto;
+            margin-bottom: 2rem;
+        }
+
+        .task-card {
+            margin-top: -1.8rem;
+            width: 22.5rem;
+            height: auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-start;
+            flex-grow: 2;
+            border-radius: var(--border-radius) var(--border-radius) 0 0;
+            position: relative;
+
+            .task-info-container {
+                margin: 1rem 1rem 2.5rem;
+                width: calc(100% - 2rem);
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-start;
+                gap: 1rem;
+
+                .task-details {
+                    width: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: flex-start;
+                    align-items: flex-start;
+
+                    h3,
+                    p {
+                        font-family: var(--font-family);
+                        color: var(--task-card-text);
+                        line-height: var(--line-height);
+                    }
+
+                    h3 {
+                        font-size: var(--font-size-task-card-title);
+                        font-weight: var(--font-weight-task-card-title);
+                    }
+
+                    p {
+                        font-size: var(--font-size-task-card-description);
+                        font-weight: var(--font-weight-task-card-description);
+                    }
+                }
+
+                .completed {
+                    text-decoration: line-through;
+                    text-decoration-color: var(--cream);
+                    text-decoration-thickness: 1.2px;
+                }
+
+                .task-buttons {
+                    width: 2rem;
+                    height: auto;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: flex-start;
+                    align-items: center;
+                    gap: 0.8rem;
+
+                    .checked-btn,
+                    .edit-btn,
+                    .delete-btn {
+                        width: 2rem;
+                        height: 2rem;
+                        border: solid 1px var(--black);
+                        border-radius: 100%;
+                        padding: 0.125rem;
+                        cursor: pointer;
+
+                        &:hover {
+                            border: solid 2px var(--black)
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+// --- DESKTOP VIEW
+@media screen and (min-width: 1024px) {
+    .projects-view {
+        width: 100%;
+        max-width: 1024px;
+        margin: 0 auto;
+        height: calc(100% - 3rem); //navbar height
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+
+    }
+
+    .form-section {
+        width: 21.5rem;
+        height: auto;
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+
+        form {
+            margin-top: 1rem;
+            width: 19.5rem;
+            height: 6rem;
+            position: relative;
+
+            .input-container {
+                width: 100%;
+                height: 6rem;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .add-task-btn,
+            .update-task-btn {
+                position: absolute;
+                top: calc(50% - 26px);
+                right: 26px;
+                width: 44px;
+                height: 44px;
+                border-radius: 100%;
+                cursor: pointer;
+
+            }
+        }
+
+    }
+
+    .tasks-section {
+        width: calc(100% - 21.5rem);
+        min-height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        border-left: solid 1px var(--stroke-col);
+        cursor: pointer;
+    }
+
+    ul {
+        margin: 1rem 0 1rem 2rem;
+        width: 40.5rem;
+        height: 100%;
+        // display: grid;
+        // grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+
+        .task-card {
+            width: 19.25rem;
+            height: auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-start;
+            flex-grow: 2;
+            border-radius: var(--border-radius);
+            position: relative;
+
+            .task-info-container {
+                margin: 1rem 1rem 2.5rem;
+                width: calc(100% - 2rem);
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-start;
+                gap: 1rem;
+
+                .task-details {
+                    width: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: flex-start;
+                    align-items: flex-start;
+
+                    h3,
+                    p {
+                        font-family: var(--font-family);
+                        color: var(--task-card-text);
+                        line-height: var(--line-height);
+                    }
+
+                    h3 {
+                        font-size: var(--font-size-task-card-title);
+                        font-weight: var(--font-weight-task-card-title);
+                    }
+
+                    p {
+                        font-size: var(--font-size-task-card-description);
+                        font-weight: var(--font-weight-task-card-description);
+                    }
+                }
+
+                .completed {
+                    text-decoration: line-through;
+                    text-decoration-color: var(--cream);
+                    text-decoration-thickness: 1.2px;
+                }
+
+                .task-buttons {
+                    width: 2rem;
+                    height: auto;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: flex-start;
+                    align-items: center;
+                    gap: 0.8rem;
+
+                    .checked-btn,
+                    .edit-btn,
+                    .delete-btn {
+                        width: 2rem;
+                        height: 2rem;
+                        border: solid 1px var(--black);
+                        border-radius: 100%;
+                        padding: 0.125rem;
+                        cursor: pointer;
+
+                        &:hover {
+                            border: solid 2px var(--black);
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 </style>
