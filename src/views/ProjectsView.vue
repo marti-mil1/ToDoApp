@@ -7,6 +7,7 @@ import { storeToRefs } from 'pinia';
 import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import Navbar from '@/components/Navbar.vue';
+import ToTopBtn from '@/components/ToTopBtn.vue';
 
 const showModal = ref(false)
 const projectToDelete = ref(null)
@@ -31,11 +32,6 @@ const colors = [
     'var(--task-card-col-5)',
     'var(--task-card-col-6)'
 ]
-
-const backToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
 
 const router = useRouter()
 
@@ -96,63 +92,6 @@ onMounted(() => {
 
     <Navbar></Navbar>
 
-    <!-- MOBILE VIEW
-    <div class="projects-view-mobile">
-
-        <form @submit.prevent="_handleSubmit">
-            <div class="input-container">
-
-                <input v-model="title" placeholder="Title" type="text" id="title" class="input-field" required />
-                <input v-model="description" placeholder="Description" type="text" id="description"
-                    class="input-field" />
-
-                <button type="submit" :class="editingId ? 'update-task-btn' : 'add-task-btn'">
-                </button>
-
-            </div>
-        </form>
-
-        <ul>
-            <li v-for="(project, index) in projects" :key="project.id" class="task-card" :style="{
-                backgroundColor: colors[index % colors.length],
-                zIndex: index
-            }">
-
-                <div class="task-info-container">
-
-                    <div class="task-details">
-                        <h3 :class="{ completed: project.completed }">{{ project.title }}</h3>
-                        <p :class="{ completed: project.completed }">{{ project.description }}</p>
-                    </div>
-
-
-                    <div class="task-buttons">
-
-                        <img src="/src/assets/icons/complete-task.svg" class="checked-btn" :checked="project.completed"
-                            @click="projectsStore.toggleCompleted(project.id)">
-
-                        <img src="/src/assets/icons/edit-task.svg" class="edit-btn" @click="_handleUpdate(project)"
-                            v-show="!project.completed && !(showModal && projectToDelete?.id === project.id)">
-
-
-                        <img src="/src/assets/icons/delete-task.svg" class="delete-btn"
-                            @click="showModalDelete(project)">
-                    </div>
-
-                </div>
-
-                <ModalDelete v-show="showModal && projectToDelete?.id === project.id" :project="projectToDelete"
-                    @confirm="_handleRemove" @cancel="closeModal"> </ModalDelete>
-
-            </li>
-
-        </ul>
-
-        <img :src="isDark ? '/src/assets/icons/arrow_upward-dark-mode.svg' : '/src/assets/icons/arrow_upward-light-mode.svg'"
-            class="back-to-top-btn" @click="backToTop">
-    </div> -->
-
-    <!-- TABLET VIEW -->
     <div class="projects-view">
 
         <section class="form-section">
@@ -206,8 +145,12 @@ onMounted(() => {
                 </li>
             </ul>
 
-            <img :src="isDark ? '/src/assets/icons/arrow_upward-dark-mode.svg' : '/src/assets/icons/arrow_upward-light-mode.svg'"
-                class="back-to-top-btn" @click="backToTop">
+            <!-- <img :src="isDark ? '/src/assets/icons/arrow_upward-dark-mode.svg' : '/src/assets/icons/arrow_upward-light-mode.svg'"
+                class="back-to-top-btn" @click="backToTop"> -->
+
+            <ToTopBtn></ToTopBtn>
+
+
         </section>
 
     </div>
@@ -311,7 +254,7 @@ onMounted(() => {
                 justify-content: space-between;
                 align-items: flex-start;
                 gap: 1rem;
-        
+
 
                 .task-details {
                     width: 100%;
@@ -362,23 +305,14 @@ onMounted(() => {
                         border-radius: 100%;
                         padding: 0.125rem;
                         cursor: pointer;
+
+                        &:hover {
+                            border: solid 2px var(--black);
+                        }
                     }
                 }
             }
         }
-    }
-
-    .back-to-top-btn {
-        z-index: 99;
-        background-color: var(--background-col);
-        border: solid 1px var(--stroke-col);
-        border-radius: 100%;
-        position: fixed;
-        width: 2.75rem;
-        height: 2.75rem;
-        padding: 0.5rem;
-        bottom: 1rem;
-        cursor: pointer;
     }
 }
 
@@ -525,23 +459,14 @@ onMounted(() => {
                         border-radius: 100%;
                         padding: 0.125rem;
                         cursor: pointer;
+
+                        &:hover {
+                            border: solid 2px var(--black)
+                        }
                     }
                 }
             }
         }
-    }
-
-    .back-to-top-btn {
-        z-index: 99;
-        background-color: var(--background-col);
-        border: solid 1px var(--stroke-col);
-        border-radius: 100%;
-        position: fixed;
-        width: 2.75rem;
-        height: 2.75rem;
-        padding: 0.5rem;
-        bottom: 1rem;
-        cursor: pointer;
     }
 }
 
@@ -589,6 +514,7 @@ onMounted(() => {
                 height: 44px;
                 border-radius: 100%;
                 cursor: pointer;
+
             }
         }
 
@@ -687,24 +613,12 @@ onMounted(() => {
                         cursor: pointer;
 
                         &:hover {
-                            background-color: var(--black);
+                            border: solid 2px var(--black);
                         }
                     }
                 }
             }
         }
-    }
-
-    .back-to-top-btn {
-        z-index: 99;
-        background-color: var(--background-col);
-        border: solid 1px var(--stroke-col);
-        border-radius: 100%;
-        position: fixed;
-        width: 2.75rem;
-        height: 2.75rem;
-        padding: 0.5rem;
-        bottom: 1rem;
     }
 }
 </style>
