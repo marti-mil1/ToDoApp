@@ -23,7 +23,8 @@ const _handleLogout = async () => {
 <template>
 
     <nav class="navbar">
-        <div class="toggle-theme-container">
+        <div class="all-elements-container">
+            <div class="toggle-theme-container">
             <ToggleDarKLightMode></ToggleDarKLightMode>
             <p class="navbar-text"> {{ isDark ? 'Dark Mode' : 'Light Mode' }}</p>
         </div>
@@ -37,6 +38,8 @@ const _handleLogout = async () => {
                 :src="isDark ? '/src/assets/icons/logout_dark-mode.svg' : '/src/assets/icons/logout_light-mode.svg'"
                 class="logout-icon">
         </div>
+        </div>
+        
     </nav>
 
 </template>
@@ -58,8 +61,18 @@ const _handleLogout = async () => {
     background-color: var(--background-col);
     border-bottom: solid 1px var(--stroke-col);
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
+
+    .all-elements-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        min-width: 320px;
+        max-width: 1024px;
+        height: 100%;
+    }
 
     .toggle-theme-container {
         display: flex;
@@ -89,6 +102,11 @@ const _handleLogout = async () => {
         align-items: center;
         gap: 0.5rem;
         width: auto;
+
+        .logout-icon {
+            cursor: pointer
+        }
+        
     }
 }
 </style>
