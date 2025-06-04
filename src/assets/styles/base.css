@@ -110,6 +110,7 @@ html.light {
   --font-size-task-card-title: 1.25rem;
   --font-size-task-card-description: 0.875rem;
   --font-size-navbar: 0.875rem;
+  --font-size-anauthorized-view: 2rem;
 
   /* FONT WEIGHT */
   --font-weight-input: normal;
@@ -124,6 +125,7 @@ html.light {
   --font-weight-task-card-title: bold;
   --font-weight-task-card-description: normal;
   --font-weight-navbar-: normal;
+  --font-weight-anauthorized-view: bold;
 }
 
 /* ----- BASE STYLES ----- */
