@@ -83,8 +83,25 @@ const closeModal = () => {
     showModal.value = false
 }
 
-onMounted(() => {
-    projectsStore.fetchProjects()
+const getGridStyle = (index) => {
+    const patternIndex = index % 10
+    switch (patternIndex) {
+        case 0: return { gridColumn: '1 / 2', gridRow: 'span 2' } // elemento 1
+        case 1: return { gridColumn: '2 / 3', gridRow: 'span 1' } // elemento 2
+        case 2: return { gridColumn: '1 / 2', gridRow: 'span 1' } // elemento 3
+        case 3: return { gridColumn: '2 / 3', gridRow: 'span 2' } // elemento 4
+        case 4: return { gridColumn: '1 / 3', gridRow: 'span 1' } // elemento 5
+        case 5: return { gridColumn: '1 / 1', gridRow: 'span 1' } // elemento 6
+        case 6: return { gridColumn: '2 / 3', gridRow: 'span 2' } // elemento 7
+        case 7: return { gridColumn: '1 / 2', gridRow: 'span 2' } // elemento 8
+        case 8: return { gridColumn: '2 / 3', gridRow: 'span 1' } // elemento 9
+        case 9: return { gridColumn: '1 / 3', gridRow: 'span 2' } // elemento 10
+        default: return {}
+    }
+}
+
+onMounted(async () => {
+    await projectsStore.fetchProjects()
 })
 </script>
 
@@ -98,8 +115,9 @@ onMounted(() => {
             <form @submit.prevent="_handleSubmit">
                 <div class="input-container">
 
-                    <input v-model="title" placeholder="Title" type="text" id="title" class="input-field" required />
-                    <input v-model="description" placeholder="Description" type="text" id="description"
+                    <input v-model="title" placeholder="Add your task" type="text" id="title" class="input-field"
+                        required />
+                    <input v-model="description" placeholder="Description (optional)" type="text" id="description"
                         class="input-field" />
 
                     <button type="submit" :class="editingId ? 'update-task-btn' : 'add-task-btn'">
@@ -110,8 +128,9 @@ onMounted(() => {
         </section>
 
         <section class="tasks-section">
-            <ul>
+            <ul class="task-grid">
                 <li v-for="(project, index) in projects" :key="project.id" class="task-card" :style="{
+                    ...getGridStyle(index),
                     backgroundColor: colors[index % colors.length],
                     zIndex: index
                 }">
@@ -521,10 +540,8 @@ onMounted(() => {
                 &:hover {
                     border: solid 2.5px var(--stroke-col);
                 }
-
             }
         }
-
     }
 
     .tasks-section {
@@ -542,27 +559,24 @@ onMounted(() => {
         margin: 1rem 0 1rem 2rem;
         width: 40.5rem;
         height: 100%;
-        // display: grid;
-        // grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
-        flex-wrap: wrap;
+        display: grid;
+        grid-template-columns: repeat(2, 19.5rem);
+        grid-auto-rows: minmax(154px, auto);
+        grid-auto-flow: dense;
         gap: 1.5rem;
 
         .task-card {
-            width: 19.25rem;
+            // width: 19.5rem;
             height: auto;
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
             align-items: flex-start;
-            flex-grow: 2;
             border-radius: var(--border-radius);
             position: relative;
 
             .task-info-container {
-                margin: 1rem 1rem 2.5rem;
+                margin: 1rem;
                 width: calc(100% - 2rem);
                 display: flex;
                 justify-content: space-between;
