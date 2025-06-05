@@ -1,0 +1,27 @@
+@import "./base.css";
+
+.input-field {
+  background-color: var(--input-background-col);
+  color: var(--input-text-col);
+  border: solid 1px var(--input-stroke-col);
+  border-radius: 30px;
+  padding: 0 1.5rem;
+  font-size: var(--font-size-input);
+  font-weight: var(--font-weight-input);
+  line-height: var(--line-height);
+  width: 17.5rem;
+  min-height: 2.75rem;
+}
+
+.input-field::placeholder {
+  color: var(--input-text-col);
+  font-family: var(--font-family);
+  font-size: var(--font-size-input);
+  font-weight: var(--font-weight-input);
+}
+
+@media screen and (min-width: 1024px) {
+  .input-field {
+    width: 19.5rem;
+  }
+}
