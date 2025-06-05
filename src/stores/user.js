@@ -30,8 +30,10 @@ export const useUserStore = defineStore(
       } catch (error) {
         console.error(`Register failed: ${error.message}`);
         toast(`SignUp failed: ${error.message}`, {
-          theme: "auto",
-          type: "default",
+          theme: "colored",
+          type: "info",
+          position: "top-center",
+          transition: "slide",
           dangerouslyHTMLString: true,
         });
         return false;
@@ -50,9 +52,11 @@ export const useUserStore = defineStore(
         return true;
       } catch (error) {
         console.error(`Login failed: ${error.message}`);
-        toast(`Login failed: invalid mail or password!`, {
-          theme: "auto",
-          type: "default",
+        toast("Login failed: invalid email or password!", {
+          theme: "colored",
+          type: "info",
+          position: "top-center",
+          transition: "slide",
           dangerouslyHTMLString: true,
         });
         return false;
@@ -83,9 +87,11 @@ export const useUserStore = defineStore(
         user.value = null;
       } catch (error) {
         console.error("Logout error:", error.message);
-         toast(`Logout failed: ${error.message}`, {
-          theme: "auto",
-          type: "default",
+        toast("Logout failed: ${error.message}", {
+          theme: "colored",
+          type: "info",
+          position: "top-center",
+          transition: "slide",
           dangerouslyHTMLString: true,
         });
       }

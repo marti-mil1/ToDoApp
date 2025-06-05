@@ -1,0 +1,8 @@
+.Toastify__toast {
+  background-color: var(--chili) !important;
+  color: var(--cream) !important;
+  font-family: var(--font-family);
+  font-size: var(--font-size-toastify);
+  font-weight: var(--font-weight-toastify);
+  line-height: var(--line-height);
+}

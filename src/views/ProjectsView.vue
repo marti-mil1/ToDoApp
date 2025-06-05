@@ -145,9 +145,6 @@ onMounted(() => {
                 </li>
             </ul>
 
-            <!-- <img :src="isDark ? '/src/assets/icons/arrow_upward-dark-mode.svg' : '/src/assets/icons/arrow_upward-light-mode.svg'"
-                class="back-to-top-btn" @click="backToTop"> -->
-
             <ToTopBtn></ToTopBtn>
 
 
@@ -203,9 +200,12 @@ onMounted(() => {
                 height: 44px;
                 border-radius: 100%;
                 cursor: pointer;
+
+                &:hover {
+                    border: solid 2.5px var(--stroke-col);
+                }
             }
         }
-
     }
 
     .tasks-section {
@@ -254,7 +254,6 @@ onMounted(() => {
                 justify-content: space-between;
                 align-items: flex-start;
                 gap: 1rem;
-
 
                 .task-details {
                     width: 100%;
@@ -357,6 +356,10 @@ onMounted(() => {
                 height: 44px;
                 border-radius: 100%;
                 cursor: pointer;
+
+                &:hover {
+                    border: solid 2.5px var(--stroke-col);
+                }
             }
         }
     }
@@ -514,6 +517,10 @@ onMounted(() => {
                 height: 44px;
                 border-radius: 100%;
                 cursor: pointer;
+
+                &:hover {
+                    border: solid 2.5px var(--stroke-col);
+                }
 
             }
         }

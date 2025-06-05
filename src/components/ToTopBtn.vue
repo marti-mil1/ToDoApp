@@ -1,6 +1,8 @@
 <script setup>
 import { useThemeStore } from '@/stores/theme';
 import { storeToRefs } from 'pinia';
+import ArrowToTopDarkMode from '@/assets/icons/arrow_upward-dark-mode.svg';
+import ArrowToTopLightMode from '@/assets/icons/arrow_upward-light-mode.svg'
 
 const themeStore = useThemeStore();
 const { isDark } = storeToRefs(themeStore);
@@ -11,7 +13,7 @@ const backToTop = () => {
 </script>
 
 <template>
-    <img :src="isDark ? '/src/assets/icons/arrow_upward-dark-mode.svg' : '/src/assets/icons/arrow_upward-light-mode.svg'"
+    <img :src="isDark ? ArrowToTopDarkMode : ArrowToTopLightMode"
         class="back-to-top-btn" @click="backToTop">
 </template>
 
@@ -28,7 +30,7 @@ const backToTop = () => {
     bottom: 1rem;
 
     &:hover {
-        border: solid 2px var(--stroke-col)
+        border: solid 2.5px var(--stroke-col)
     }
 }
 </style>

@@ -32,10 +32,12 @@ const _handleLogin = async () => {
   } catch (err) {
     console.error(err)
     toast("Login failed: invalid email or password!", {
-      "theme": "auto",
-      "type": "default",
-      "dangerouslyHTMLString": true
-    })
+      theme: "colored",
+      type: "info",
+      position: "top-center",
+      transition: "slide",
+      dangerouslyHTMLString: true,
+    });
   }
 }
 
@@ -59,7 +61,7 @@ const _handleSignUp = async () => {
 
 
 <template>
-  
+
   <div class="auth-view">
     <div class="auth-container">
       <img class="logo-icon" src="/src/assets/icons/logo-with-stroke.svg" alt="logo-icon">
