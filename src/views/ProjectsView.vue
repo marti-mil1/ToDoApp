@@ -203,9 +203,12 @@ onMounted(() => {
                 height: 44px;
                 border-radius: 100%;
                 cursor: pointer;
+
+                &:hover {
+                    border: solid 2px var(--black);
+                }
             }
         }
-
     }
 
     .tasks-section {
@@ -254,7 +257,6 @@ onMounted(() => {
                 justify-content: space-between;
                 align-items: flex-start;
                 gap: 1rem;
-
 
                 .task-details {
                     width: 100%;

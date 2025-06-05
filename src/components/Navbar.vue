@@ -4,6 +4,8 @@ import { useUserStore } from '@/stores/user';
 import { storeToRefs } from 'pinia';
 import { useRouter } from 'vue-router';
 import { useThemeStore } from '@/stores/theme';
+import LogoutIconDarkMode from '@/assets/icons/logout_dark-mode.svg';
+import LogoutIconLightMode from '@/assets/icons/logout_light-mode.svg'
 
 const userStore = useUserStore()
 const { user, logout } = userStore
@@ -35,7 +37,7 @@ const _handleLogout = async () => {
             <p class="navbar-text">Logout</p>
 
             <img @click="_handleLogout"
-                :src="isDark ? '/src/assets/icons/logout_dark-mode.svg' : '/src/assets/icons/logout_light-mode.svg'"
+                :src="isDark ? LogoutIconDarkMode : LogoutIconLightMode"
                 class="logout-icon">
         </div>
         </div>
