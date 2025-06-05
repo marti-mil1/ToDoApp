@@ -30,7 +30,7 @@ const backToTop = () => {
     bottom: 1rem;
 
     &:hover {
-        border: solid 2px var(--stroke-col)
+        border: solid 2.5px var(--stroke-col)
     }
 }
 </style>

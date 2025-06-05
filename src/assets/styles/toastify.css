@@ -1,0 +1,7 @@
+.Toastify__toast {
+  background-color: var(--chili) !important;
+  color: var(--cream) !important;
+
+  /* background-color: var(--background-col) !important;
+  color: var(--text-col) !important; */
+}
