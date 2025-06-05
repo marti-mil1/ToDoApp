@@ -111,4 +111,10 @@ const _handleLogout = async () => {
         
     }
 }
+
+@media screen and (min-width: 1024px) {
+    .navbar {
+        padding: 0;
+    }
+}
 </style>
